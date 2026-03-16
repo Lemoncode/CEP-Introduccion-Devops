@@ -1,0 +1,52 @@
+{
+  "name": "cep-cicd-jenkins-backend",
+  "version": "1.0.0",
+  "description": "Backend para app de recetas (CI/CD Jenkins)",
+  "main": "./dist/server.mjs",
+  "type": "module",
+  "scripts": {
+    "build": "tsdown src/server.ts",
+    "db:migrate": "prisma db push",
+    "db:seed": "prisma db seed",
+    "dev": "nodemon",
+    "format:check": "oxfmt --check src",
+    "format:write": "oxfmt --write src",
+    "lint": "oxlint .",
+    "prisma:generate": "prisma generate",
+    "start": "node dist/server.mjs",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "pretest:e2e": "npm run db:migrate",
+    "test:e2e": "vitest run",
+    "test:coverage": "vitest run --coverage",
+    "type-check": "tsc --noEmit"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "@prisma/client": "6.19",
+    "cors": "^2.8.6",
+    "dotenv": "^17.3.1",
+    "express": "^5.2.1",
+    "zod": "^4.3.6"
+  },
+  "devDependencies": {
+    "@types/cors": "^2.8.19",
+    "@types/express": "^5.0.6",
+    "@types/node": "^25.5.0",
+    "@types/supertest": "^7.2.0",
+    "@vitest/coverage-v8": "^4.1.0",
+    "nodemon": "^3.1.14",
+    "oxfmt": "^0.40.0",
+    "oxlint": "^1.55.0",
+    "prisma": "6.19",
+    "supertest": "^7.2.2",
+    "ts-node": "^10.9.2",
+    "tsdown": "^0.21.2",
+    "tsx": "^4.21.0",
+    "typescript": "^5.9.3",
+    "vitest": "^4.1.0",
+    "vitest-mock-extended": "^3.1.0"
+  }
+}

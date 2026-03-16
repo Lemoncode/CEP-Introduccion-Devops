@@ -1,0 +1,47 @@
+[
+  {
+    "title": "Tortilla de patatas",
+    "description": "Clásica receta española de tortilla de patatas.",
+    "difficulty": "medium",
+    "prepTime": 40,
+    "servings": 4,
+    "ingredients": ["4 patatas", "6 huevos", "aceite de oliva", "sal"],
+    "steps": ["Pelar patatas", "Freír patatas", "Batir huevos", "Mezclar", "Cocinar"]
+  },
+  {
+    "title": "Gazpacho",
+    "description": "Sopa fría andaluza ideal para el verano.",
+    "difficulty": "easy",
+    "prepTime": 20,
+    "servings": 4,
+    "ingredients": ["1 kg tomates", "1 pepino", "1 pimiento verde", "1 diente de ajo", "aceite de oliva", "vinagre", "sal"],
+    "steps": ["Trocear verduras", "Triturar", "Enfriar"]
+  },
+  {
+    "title": "Paella",
+    "description": "Arroz tradicional valenciano con marisco.",
+    "difficulty": "hard",
+    "prepTime": 90,
+    "servings": 6,
+    "ingredients": ["400g arroz", "1 sepia", "8 gambas", "1 pimiento rojo", "caldo de pescado", "azafrán", "aceite de oliva", "sal"],
+    "steps": ["Preparar sofrito", "Añadir arroz", "Cocer con caldo", "Reposar"]
+  },
+  {
+    "title": "Salmorejo",
+    "description": "Crema fría de tomate típica de Córdoba.",
+    "difficulty": "easy",
+    "prepTime": 15,
+    "servings": 2,
+    "ingredients": ["500g tomates", "100g pan", "1 diente de ajo", "aceite de oliva", "sal"],
+    "steps": ["Triturar tomates", "Añadir pan", "Emulsionar con aceite", "Enfriar"]
+  },
+  {
+    "title": "Flan",
+    "description": "Postre clásico de huevo y caramelo.",
+    "difficulty": "medium",
+    "prepTime": 60,
+    "servings": 4,
+    "ingredients": ["4 huevos", "500ml leche", "100g azúcar", "caramelo líquido"],
+    "steps": ["Preparar caramelo", "Mezclar huevos y leche", "Hornear", "Enfriar"]
+  }
+]

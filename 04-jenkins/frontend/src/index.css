@@ -1,0 +1,52 @@
+@import "tailwindcss";
+
+@theme {
+  /* Colors */
+  --color-terracotta: #b85c38;
+  --color-olive: #5f6f52;
+  --color-cream: #f7f3ea;
+  --color-charcoal: #2b2b2b;
+  --color-sand: #d9c7a3;
+  --color-mist: #e8e3d9;
+
+  /* Font Families */
+  --font-display: Fraunces, Georgia, serif;
+  --font-body: Manrope, -apple-system, BlinkMacSystemFont, Segoe UI, sans-serif;
+
+  /* Border Radius */
+  --radius-card: 14px;
+
+  /* Box Shadows */
+  --shadow-card: 0 8px 24px rgba(43, 43, 43, 0.08);
+  --shadow-sm: 0 2px 8px rgba(43, 43, 43, 0.04);
+}
+
+@layer components {
+  .btn-primary {
+    @apply rounded-lg bg-terracotta px-6 py-3 font-semibold text-white transition-colors hover:bg-terracotta/90;
+  }
+
+  .btn-secondary {
+    @apply rounded-lg border-2 border-terracotta px-6 py-3 font-semibold text-terracotta transition-colors hover:bg-terracotta hover:text-white;
+  }
+
+  .btn-small {
+    @apply rounded-lg border-2 border-terracotta bg-terracotta border-indigo-500/10 px-6 py-3 h-fit text-sm font-medium text-white transition-colors hover:bg-terracotta/90 hover:border-terracotta/10 leading-6;
+  }
+
+  .card {
+    @apply rounded-card border border-mist bg-white p-6 shadow-card;
+  }
+
+  .input-base {
+    @apply rounded-lg border-2 border-mist bg-white px-4 py-3 font-body focus:border-terracotta focus:outline-none;
+  }
+
+  .badge {
+    @apply inline-flex items-center gap-1 rounded-full bg-mist px-3 py-1 text-sm font-medium text-charcoal;
+  }
+}
+
+body {
+  @apply font-body;
+}

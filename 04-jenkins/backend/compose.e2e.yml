@@ -1,0 +1,31 @@
+services:
+  mongo-e2e:
+    build:
+      context: .
+      dockerfile: mongo.Dockerfile
+      args:
+        MONGO_VERSION: 8.2.2
+    environment:
+      MONGO_REPLICA_PORT: 27017
+      MONGO_REPLICA_HOST: mongo-e2e
+      MONGO_COMMAND: mongosh
+    healthcheck:
+      test: ["CMD", "mongosh", "--eval", "rs.status().ok || quit(1)"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
+
+  tests:
+    build:
+      context: .
+      target: builder
+    environment:
+      DATABASE_URL: mongodb://mongo-e2e:27017/recipes?replicaSet=rs0
+      FORCE_COLOR: 0
+      NO_COLOR: true
+      TEST_MODE: $TEST_MODE
+    command: npm run test:e2e
+    depends_on:
+      mongo-e2e:
+        condition: service_healthy
