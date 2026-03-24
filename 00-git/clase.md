@@ -534,3 +534,170 @@ git branch -a
 ```
 
 ---
+
+## 13. Despliegue en GitHub Pages
+
+El merge a `main` ha cerrado el ciclo de desarrollo. Ahora vamos a hacer que la aplicación sea pública en internet, de forma gratuita, usando **GitHub Pages**.
+
+### ¿Qué es GitHub Pages?
+
+GitHub Pages es un servicio de hosting gratuito que ofrece GitHub. Toma los ficheros estáticos de tu repo (HTML, CSS, JS) y los sirve desde una URL pública del tipo:
+
+```
+https://<tu-usuario>.github.io/<nombre-del-repo>/
+```
+
+No necesitas ningún servidor propio, ni pagar nada.
+
+### ¿Qué es GitHub Actions?
+
+GitHub Actions es el sistema de automatización de GitHub. Permite definir flujos de trabajo (llamados _workflows_) que se ejecutan automáticamente cuando ocurre algo en el repo: un push, un PR, una etiqueta…
+
+Cada workflow es un fichero YAML que vive dentro de la carpeta `.github/workflows/` del proyecto. GitHub lo detecta y lo ejecuta solo.
+
+En nuestro caso vamos a crear un workflow que, cada vez que hagamos push a `main`, construya la app y la publique en GitHub Pages automáticamente.
+
+### Paso 0 — Configurar la ruta base en Vite
+
+Antes de desplegar hay que decirle a Vite dónde va a vivir la app. GitHub Pages la sirve en:
+
+```
+https://<tu-usuario>.github.io/<nombre-del-repo>/
+```
+
+Vite necesita conocer ese prefijo (`/<nombre-del-repo>/`) para construir correctamente las rutas de todos los assets (JS, CSS, imágenes). Si no se configura, o si el valor no coincide exactamente con el nombre del repo, la app cargará la página HTML pero los assets darán error 404 y la app aparecerá en blanco.
+
+Abre `vite.config.ts` y añade el campo `base`:
+
+```ts
+export default defineConfig({
+  plugins: [react()],
+  base: "/<nombre-de-tu-repo>/",
+});
+```
+
+Por ejemplo, si tu repo se llama `punto-partida-practica-modulo-git`:
+
+```ts
+base: '/punto-partida-practica-modulo-git/',
+```
+
+> El valor debe coincidir **exactamente** con el nombre del repo en GitHub, incluyendo las barras al inicio y al final.
+
+### Paso 1 — Activar GitHub Pages en el repo
+
+Antes de crear ningún fichero, hay que decirle a GitHub que este repo va a usar Pages. Si no lo hacemos primero, el workflow fallará porque el entorno de despliegue no existirá todavía.
+
+1. Ve a la pestaña **Settings** de tu repo en GitHub
+2. En el menú lateral, haz clic en **Pages**
+3. En la sección **"Build and deployment"**, abre el desplegable **Source** y elige **GitHub Actions**
+
+Con esto GitHub sabe que la publicación la va a gestionar un workflow nuestro, no una rama estática.
+
+### Paso 2 — Añadir la variable de entorno en GitHub
+
+Recuerda que el fichero `.env` está en `.gitignore` y nunca llega al servidor. En producción, las variables de entorno se configuran directamente en la plataforma.
+
+1. Ve a **Settings → Secrets and variables → Actions**
+2. Haz clic en la pestaña **Variables** (no Secrets, porque esto no es un dato sensible)
+3. Crea una nueva variable:
+
+```
+Nombre:  VITE_FEATURE_OPCION_3
+Valor:   true
+```
+
+Cuando el workflow construya la app, leerá esta variable de aquí en lugar de tu `.env` local.
+
+### Paso 3 — Crear el workflow
+
+Ahora sí creamos el fichero que define la automatización. La ruta y el nombre son importantes: GitHub solo detecta workflows dentro de `.github/workflows/`.
+
+Crea el fichero `.github/workflows/deploy.yml` con este contenido:
+
+```yaml
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    env:
+      FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 24
+          cache: "npm"
+      - name: Install dependencies
+        run: npm ci
+      - name: Build
+        run: npm run build
+        env:
+          VITE_FEATURE_OPCION_3: ${{ vars.VITE_FEATURE_OPCION_3 }}
+      - uses: actions/upload-pages-artifact@v4
+        with:
+          path: dist
+      - uses: actions/deploy-pages@v4
+        id: deployment
+```
+
+> **Advertencias del linter en VS Code:** Al pegar este YAML puede que el IDE muestre dos avisos en amarillo. Son falsos positivos y no afectan al funcionamiento:
+>
+> - `Value 'github-pages' is not valid` — el nombre es correcto; el linter local no tiene contexto de GitHub y no puede validarlo.
+> - `Context access might be invalid: VITE_FEATURE_OPCION_3` — la variable existe en el repo pero el linter no puede verificarla desde tu máquina.
+
+Vamos línea a línea:
+
+- **`name`** — el nombre que aparecerá en la pestaña Actions de GitHub
+- **`on: push: branches: [main]`** — se dispara automáticamente al hacer push a `main`
+- **`on: workflow_dispatch`** — también se puede lanzar a mano desde la interfaz de GitHub
+- **`permissions`** — el token que usa Actions tiene permisos mínimos por defecto; hay que elevarlos explícitamente para poder publicar en Pages
+- **`runs-on: ubuntu-latest`** — el workflow corre en un servidor Linux limpio que GitHub monta para cada ejecución
+- **`actions/checkout@v6`** — descarga el código del repo en ese servidor
+- **`actions/setup-node@v6`** — instala Node.js
+- **`npm ci`** — instala las dependencias exactas del `package-lock.json`
+- **`npm run build`** con `VITE_FEATURE_OPCION_3: ${{ vars.VITE_FEATURE_OPCION_3 }}`— construye la app inyectando la variable que configuraste en el paso anterior
+- **`upload-pages-artifact`** — empaqueta la carpeta `dist/` generada por Vite
+- **`deploy-pages`** — publica ese paquete en GitHub Pages
+
+### Paso 4 — Hacer push y ver el despliegue
+
+Añade y sube el fichero:
+
+```bash
+git add .github/workflows/deploy.yml
+git commit -m "ci: add GitHub Pages deploy workflow"
+git push origin main
+```
+
+Ve a la pestaña **Actions** de tu repo en GitHub. Verás el workflow ejecutándose en tiempo real, paso a paso. Cuando termine, aparecerá la URL pública de la app.
+
+### Paso 5 — Jugar con la feature flag en producción
+
+Ahora viene la parte interesante. Sin tocar el código:
+
+1. Ve a **Settings → Secrets and variables → Actions → Variables**
+2. Cambia `VITE_FEATURE_OPCION_3` a `false`
+3. Ve a **Actions** → selecciona el último workflow → **Re-run all jobs**
+
+Cuando termine, recarga la URL pública. La Opción 3 habrá desaparecido.
+
+Vuelve a ponerlo a `true` y repite. Aparece de nuevo.
+
+> Esto es exactamente cómo funciona en proyectos reales: el mismo código corre en todos los entornos (desarrollo, staging, producción), pero cada entorno tiene sus propias variables. Activar o desactivar una feature en producción es solo cambiar un valor en el panel de la plataforma, sin tocar el código ni hacer un nuevo despliegue manual.
+
+---
