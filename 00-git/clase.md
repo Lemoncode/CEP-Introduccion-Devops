@@ -35,7 +35,7 @@ const OPTIONS: Option[] = [
     id: 2,
     title: "Opción 2",
     description: "Ramas",
-    message: "Una rama es una línea de desarrollo independiente...",
+    message: "Una rama es como una línea de tiempo alternativa de tu código...",
     featureFlag: false,
   },
   ...
@@ -226,11 +226,11 @@ Sustituye el campo `message` de la Opción 2:
 ```tsx
 // Antes:
 message:
-  "Una rama es una línea de desarrollo independiente. Puedes crear, fusionar y eliminar ramas sin afectar a main.",
+  "Una rama es como una línea de tiempo alternativa de tu código. Puedes experimentar, cometer errores y fusionar solo lo que funciona, sin afectar nunca a main.",
 
 // Después:
 message:
-  "Una rama es como una línea de tiempo alternativa de tu código. Puedes experimentar, cometer errores y fusionar solo lo que funciona, sin afectar nunca a main.",
+  "Una rama es una línea de desarrollo independiente. Puedes crear, fusionar y eliminar ramas sin afectar a main.",
 ```
 
 **Cambio 2 — cambiar la descripción corta.**
@@ -378,7 +378,7 @@ VS Code elimina los marcadores y el fichero queda limpio:
   title: "Opción 2",
   description: "Ramas y merges",
   message:
-    "Una rama es como una línea de tiempo alternativa de tu código...",
+    "Una rama es una línea de desarrollo independiente. Puedes crear, fusionar y eliminar ramas sin afectar a main.",
   featureFlag: false,
 },
 ```
