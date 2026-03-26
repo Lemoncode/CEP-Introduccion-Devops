@@ -1,71 +1,388 @@
-# Ejercicios
+# Laboratorio Docker
 
-## 1. Creando imágenes
+Este laboratorio tiene como objetivo practicar los conceptos básicos de
+Docker:
 
-- Ejecuta un contenedor de `ubuntu`, instala `curl` dentro del mismo.
-- ¿Con qué comando podrías preservar el cambio?
-- Crea un `Dockerfile` que haga lo mismo. Ejecuta la nueva imagen y verifica que puedes usar `curl`
-- ¿Cómo podrías ver las distintas capas del contenedor?
+- Imágenes
+- Contenedores
+- Capas
+- Volúmenes
+- Redes
+- Docker Compose
 
-Para instalar `curl` en `ubuntu` puedes usar:
+---
+
+# Entrega del laboratorio
+
+Este laboratorio debe entregarse mediante un **repositorio público en
+GitHub**.
+
+El repositorio debe contener un fichero:
+
+    README.md
+
+En este fichero deberás documentar:
+
+- Los pasos que has realizado
+- Los comandos utilizados
+- Una breve explicación de cada paso
+- Las respuestas a las preguntas del laboratorio
+
+El objetivo es que cualquier persona pueda **seguir tu documentación y
+reproducir el laboratorio**.
+
+Ejemplo de entrega:
+
+    https://github.com/usuario/docker-lab
+
+---
+
+# Criterios de evaluación
+
+El laboratorio se divide en:
+
+- **Parte obligatoria (necesaria para aprobar)**
+- **Parte opcional (para subir nota)**
+
+---
+
+## Parte obligatoria (mínimo para aprobar)
+
+Debes completar correctamente los siguientes ejercicios:
+
+- Ejercicio 1 --- Creando imágenes
+- Ejercicio 3 --- Volúmenes persistentes
+- Ejercicio 4 --- Bind mounts
+- Ejercicio 6 --- Redes privadas
+- Ejercicio 9 --- Docker Compose
+
+Si estos ejercicios **no funcionan o no están documentados**, el
+laboratorio **no se considerará aprobado**.
+
+---
+
+## Parte opcional (para subir nota)
+
+Estos ejercicios son **muy sencillos** y sirven para mejorar la nota.
+
+Puedes hacer uno o varios.
+
+- Ejercicio 2 --- Limpieza de imágenes
+- Ejercicio 5 --- Ver información de un volumen
+- Ejercicio 7 --- Investigar la red `none`
+- Ejercicio 8 --- Conectar un contenedor a dos redes
+
+También puedes hacer una pequeña mejora en Docker Compose.
+
+### Bonus sencillo
+
+Añade un servicio `nginx` a tu `docker-compose.yml`.
+
+Debe:
+
+- usar la imagen `nginx`
+- exponer el puerto `8080`
+- mostrar una página simple
+
+Ejemplo `index.html`:
+
+```html
+<h1>Laboratorio Docker funcionando</h1>
+```
+
+Si al abrir:
+
+    http://localhost:8080
+
+aparece la página, el bonus estará completado.
+
+---
+
+# 1. Creando imágenes
+
+## Paso 1
+
+Ejecuta un contenedor basado en la imagen:
+
+    ubuntu
+
+Accede a la terminal del contenedor.
+
+Instala `curl`:
 
 ```bash
+apt-get update
 apt-get install curl
 ```
 
-## 2. Limpiando imágenes
+Comprueba que funciona:
 
-Construye tres imágenes distintas:
+```bash
+curl --version
+```
 
-1. Parte de la imagen base de `alpine` o `ubuntu`. Crea un `Dockerfile` y construye la imagen.
-2. En una nueva iteración, instala `curl` y construye la imagen.
-3. En la siguiente iteración, instala `wget` y construye la imagen.
+---
 
-- Inspecciona tus imágenes locales ¿Qué ocurre?
-- ¿Cómo podemos limpiar el sistema?
+## Pregunta
 
-## 3. Volumenes persistentes
+¿Con qué comando podrías **guardar los cambios del contenedor como una
+nueva imagen**?
 
-Ejecuta un contenedor de `postgres` con un volumen manejado por Docker y que monte en `/var/lib/postgresql/data`. Conectate a la base de datos y crea una tabla `items`, que tenga doos campos `id` y `name`, siendo `id` primary key. Inserta un registro en la tabla items.
+---
 
-- Para y elimina el contenedor que has creado.
-- Vuelve a ejecutar un nuevo contenedor de `postgres` montando el volumen anterior, en el mismo *path*. Verifica que los datos persisten.
+## Paso 2 --- Dockerfile
 
-## 4. Bind mounts
+Crea un `Dockerfile` que haga lo mismo automáticamente.
 
-Crea un fichero `index.html` en tu máquina local. Ejecuta un contenedor de `nginx` mapeando el puerto 80 a un puerto en tu local, y enlace tu fichero `index.html` local con `/usr/share/nginx/html/index.html`.
+Ejemplo:
 
-- ¿Qué ocurre si editas el fichero local `index.html`?
+```dockerfile
+FROM ubuntu
 
-## 5. Auditando volumenes
+RUN apt-get update && apt-get install -y curl
+```
 
-- ¿Qué comando deberías usar para averiguar dónde alamacena Docker los datos de un volumen dado?
-- Si estás usando Docker Desktop en Windows o macOS que diferencia habría con un Linux en el contexto de dónde están alamacenados los datos.
+Construye la imagen y ejecuta un contenedor.
 
-## 6. Creando redes privadas
+Comprueba que `curl` está instalado.
 
-- Crea una red tipo `bridge` llamada `my-net`. Eejcuta dos conetenedores de tipo `ubuntu`, asegura que `ping` está disponible, ambos deben correr en la red `my-net`.
-- Comprueba que puedes usar `ping` en ambos y se alcazan entre si.
+---
 
-## 7. Red `none`
+## Pregunta
 
-- ¿Cuáles serían los casos de uso de la red `none`?
+¿Qué comando permite ver las **capas de una imagen Docker**?
 
-## 8. Multi-network
+---
 
-Crea dos redes de tipo bridge `secure-zone` y `public-zone`. Arranca un contenedor en `public-zone`.
+# 2. Limpiando imágenes (opcional)
 
-- ¿Puedes añadir tu contenedor a `secure-zone`? ¿Qué comado deberías utilizar?
-- ¿Cómo puedes verificar en que red se encuentra un contenedor?
+Crea un `Dockerfile` basado en:
 
-## 9. Docker Compose - Compartiendo Volumenes
+    ubuntu
 
-- Crea un manifiesto para Docker Compose con dos servicios que comparten un mismo volumen.
-- Nombra al primer servicio como `writer`, este debe montar el volumen en `/app/logs` y añadir un `timestamp` a un fichero cada 30 segundos.
-- Nombra al sergundo servicion como `reader`, debe montar el volumen como solo para lectura, y redireccionar su conetnido a `stdout`.
+Construye la imagen.
 
-## 10. Docker Compose - Profiles
+Después modifica el Dockerfile para instalar:
 
-- Crea un manifiesto para docker compose con `postgres` y `pgadmin`
-- `Pgadmin` debe conectar con `Postgres`. Crea los mecanismo adecuados para aegurar que la comunicación entre ambos servicios es posible.
-- Crea dos perfiles, uno para levantar ambos servicios y otro para levanatr sólo `Postgres`
+- `curl`
+- después `wget`
+
+Construye la imagen en cada cambio.
+
+Lista las imágenes:
+
+```bash
+docker images
+```
+
+Pregunta:
+
+¿Qué ocurre con las imágenes anteriores?
+
+---
+
+# 3. Volúmenes persistentes
+
+Ejecuta un contenedor de:
+
+    postgres
+
+Usa un volumen Docker montado en:
+
+    /var/lib/postgresql/data
+
+---
+
+## Crear tabla
+
+Conéctate a la base de datos.
+
+Crea la tabla:
+
+```sql
+CREATE TABLE items (
+ id SERIAL PRIMARY KEY,
+ name TEXT
+);
+```
+
+Inserta un registro:
+
+```sql
+INSERT INTO items(name) VALUES ('item1');
+```
+
+---
+
+## Comprobación
+
+1.  Para el contenedor
+2.  Elimina el contenedor
+3.  Crea un nuevo contenedor usando **el mismo volumen**
+
+Comprueba que los datos siguen existiendo.
+
+---
+
+# 4. Bind mounts
+
+Crea un archivo en tu máquina:
+
+    index.html
+
+Ejemplo:
+
+```html
+<h1>Hola Docker</h1>
+```
+
+---
+
+Ejecuta un contenedor `nginx`:
+
+- mapea el puerto `80`
+- monta el archivo en:
+
+```{=html}
+<!-- -->
+```
+
+    /usr/share/nginx/html/index.html
+
+Abre el navegador.
+
+---
+
+Pregunta:
+
+¿Qué ocurre si modificas el archivo `index.html` en tu máquina?
+
+---
+
+# 5. Auditando volúmenes (opcional)
+
+Investiga:
+
+¿Qué comando permite ver **dónde guarda Docker los datos de un
+volumen**?
+
+---
+
+# 6. Creando redes privadas
+
+Crea una red llamada:
+
+    my-net
+
+---
+
+Arranca dos contenedores `ubuntu` en esa red.
+
+Instala `ping` si es necesario.
+
+Desde un contenedor intenta hacer:
+
+```bash
+ping otro_contenedor
+```
+
+---
+
+Pregunta
+
+¿Los contenedores pueden comunicarse entre sí?
+
+---
+
+# 7. Red none (opcional)
+
+Investiga:
+
+¿Para qué serviría ejecutar un contenedor con red:
+
+    none
+
+---
+
+# 8. Multi-network (opcional)
+
+Crea dos redes:
+
+    secure-zone
+    public-zone
+
+Arranca un contenedor en `public-zone`.
+
+Pregunta:
+
+¿Puedes conectarlo también a `secure-zone`?
+
+¿Qué comando usarías?
+
+---
+
+# 9. Docker Compose --- Compartiendo volúmenes
+
+Crea un fichero:
+
+    docker-compose.yml
+
+Con dos servicios.
+
+---
+
+## writer
+
+Debe:
+
+- montar un volumen en `/app/logs`
+- escribir un timestamp cada 30 segundos
+
+---
+
+## reader
+
+Debe:
+
+- montar el volumen en modo solo lectura
+- mostrar el contenido en consola
+
+---
+
+# 10. Docker Compose Profiles (opcional)
+
+Crea un `docker-compose.yml` con:
+
+- `postgres`
+- `pgadmin`
+
+Haz que `pgadmin` pueda conectarse a `postgres`.
+
+---
+
+Crea dos perfiles:
+
+### Perfil completo
+
+Levanta:
+
+- postgres
+- pgadmin
+
+### Perfil base
+
+Levanta solo:
+
+- postgres
+
+---
+
+# Resumen evaluación
+
+Nivel Requisitos
+
+---
+
+Aprobado Parte obligatoria completa
+Notable Parte obligatoria + ejercicios opcionales
+Sobresaliente Parte obligatoria + opcionales + bonus
