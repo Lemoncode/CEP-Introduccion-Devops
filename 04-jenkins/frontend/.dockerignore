@@ -1,0 +1,23 @@
+# Dependencies and build outputs
+node_modules
+
+dist
+coverage
+.vite
+
+# VCS and editor metadata
+.git
+.gitignore
+.vscode
+.idea
+.DS_Store
+
+# Logs and local env files
+*.log
+.env
+.env.local
+.env.*.local
+
+# Docs and CI files not required to build runtime image
+README.md
+Jenkinsfile

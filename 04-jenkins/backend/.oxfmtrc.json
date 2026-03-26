@@ -1,0 +1,9 @@
+{
+  "$schema": "./node_modules/oxfmt/configuration_schema.json",
+  "ignorePatterns": ["src/prisma"],
+  "printWidth": 150,
+  "arrowParens": "always",
+  "semi": true,
+  "endOfLine": "lf",
+  "useTabs": false
+}

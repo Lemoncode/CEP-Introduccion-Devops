@@ -1,0 +1,18 @@
+{
+  "$schema": "./node_modules/oxlint/configuration_schema.json",
+  "plugins": [],
+  "categories": {},
+  "rules": {
+    "prefer-const": "warn"
+  },
+  "settings": {
+    "vitest": {
+      "typecheck": true
+    }
+  },
+  "env": {
+    "builtin": true
+  },
+  "globals": {},
+  "ignorePatterns": []
+}

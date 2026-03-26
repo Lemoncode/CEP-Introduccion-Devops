@@ -1,0 +1,46 @@
+{
+  "name": "recipes-frontend",
+  "version": "1.0.0",
+  "description": "Recipe app SPA for CI/CD Jenkins course",
+  "type": "module",
+  "main": "dist/index.html",
+  "scripts": {
+    "start": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "type-check": "tsc --noEmit",
+    "format:check": "oxfmt --check .",
+    "format:write": "oxfmt --write .",
+    "lint": "oxlint .",
+    "test": "vitest run ",
+    "test:watch": "vitest",
+    "test:coverage": "vitest run --coverage"
+  },
+  "dependencies": {
+    "@tanstack/react-query": "^5.90.21",
+    "@tanstack/react-router": "^1.167.0",
+    "axios": "^1.13.6",
+    "react": "^19.2.4",
+    "react-dom": "^19.2.4"
+  },
+  "devDependencies": {
+    "@tailwindcss/vite": "^4.2.1",
+    "@testing-library/jest-dom": "^6.9.1",
+    "@testing-library/react": "^16.3.2",
+    "@types/react": "19.2.14",
+    "@types/react-dom": "19.2.3",
+    "@vitejs/plugin-react": "^5.1.4",
+    "@vitest/coverage-v8": "^4.1.0",
+    "@vitest/ui": "^4.1.0",
+    "jsdom": "^28.1.0",
+    "oxfmt": "^0.40.0",
+    "oxlint": "^1.55.0",
+    "tailwindcss": "^4.2.1",
+    "typescript": "^5.9.3",
+    "vite": "^7.3.1",
+    "vite-plugin-checker": "^0.12.0",
+    "vite-tsconfig-paths": "^6.1.1",
+    "vitest": "^4.1.0",
+    "vitest-mock-extended": "^3.1.0"
+  }
+}

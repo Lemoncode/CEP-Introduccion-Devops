@@ -1,0 +1,18 @@
+services:
+  mongo:
+    build:
+      context: .
+      dockerfile: mongo.Dockerfile
+      args:
+        MONGO_VERSION: 8.2.2
+    ports:
+      - 27017:27017
+    environment:
+      MONGO_REPLICA_PORT: 27017
+      MONGO_REPLICA_HOST: localhost
+      MONGO_COMMAND: mongosh
+    volumes:
+      - mongo_data:/data/db
+
+volumes:
+  mongo_data:
