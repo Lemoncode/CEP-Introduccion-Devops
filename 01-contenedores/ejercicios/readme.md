@@ -5,7 +5,7 @@
 - Ejecuta un contenedor de `ubuntu`, instala `curl` dentro del mismo.
 - ¿Con qué comando podrías preservar el cambio?
 - Crea un `Dockerfile` que haga lo mismo. Ejecuta la nueva imagen y verifica que puedes usar `curl`
-- ¿Cómo podrías ver las distaintas capas del contenedor?
+- ¿Cómo podrías ver las distintas capas del contenedor?
 
 Para instalar `curl` en `ubuntu` puedes usar:
 
@@ -68,4 +68,4 @@ Crea dos redes de tipo bridge `secure-zone` y `public-zone`. Arranca un contened
 
 - Crea un manifiesto para docker compose con `postgres` y `pgadmin`
 - `Pgadmin` debe conectar con `Postgres`. Crea los mecanismo adecuados para aegurar que la comunicación entre ambos servicios es posible.
-- Crea dos perfiles, uno para levantar ambos servicios y otro para levanatr sólo `Postgres` 
+- Crea dos perfiles, uno para levantar ambos servicios y otro para levanatr sólo `Postgres`
