@@ -13,7 +13,7 @@ GitHub provides Linux, Windows, and macOS virtual machines to run your workflows
 ### Components
 
 - **Workflows**: a workflow is a configurable automated process that will run one or more jobs. Workflows are defined by a YAML file stored in the `.github/workflows` directory in a repository. It will run when triggered by an event in your repository, or they can be triggered manually, or at a defined schedule.
-- **Events**: an event is a specific activity in a repositoru that triggers a workflow run. For example, when someone creates a PR, opens an issue or pushes a commit.
+- **Events**: an event is a specific activity in a repository that triggers a workflow run. For example, when someone creates a PR, opens an issue or pushes a commit.
 - **Jobs**: a job is a set of steps in a workflow that is executed on the same runner. Each step is either a shell script that will be executed or an action that will be run. Jobs may have dependencies with other jobs (or not) and run in parallel with others.
 - **Actions**: an action is a custom application for the GitHub Actions platform that performs a complex but frequently repeated task. It helps you to reduce repetitive code in your workflow files. An action can pull your git repository from GitHub or set up the authentication to your cloud provider. You can write your own actions, or you can find actions to use in your workflows in the GitHub Marketplace.
 - **Runners**: a runner is a server that runs your workflows when they're triggered. Each runner can run a single job at a time. GitHub provides Ubuntu Linux, Microsoft Windows, and macOS runners to run your workflows.
@@ -79,7 +79,7 @@ Jobs that run on Windows and macOS runners that GitHub hosts consume minutes at 
 
 ### Usage limits
 
-There are some limits whe using GitHub-hosted runners.
+There are some limits when using GitHub-hosted runners.
 
 | **Plan**         | **Total concurrent jobs** | **Maximum concurrent macOs jobs** |
 |------------------|---------------------------|-----------------------------------|

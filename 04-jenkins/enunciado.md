@@ -22,7 +22,7 @@ El Jenkinsfile debe cubrir los siguientes requisitos:
      - `NO_COLOR`: Tendrá el valor booleano `true`.
 
 3. **Auditoría de herramientas**
-   - Incluye una etapa "Audit tools" imprima por pantalla la versión de node con `node --version`.
+   - Incluye una etapa "Audit tools" que imprima por pantalla la versión de node con `node --version`.
 
 4. **Instalación de dependencias**
    - Incluye una etapa "Install dependencies" que instale las dependencias del proyecto con `npm install`.
@@ -31,7 +31,7 @@ El Jenkinsfile debe cubrir los siguientes requisitos:
    - Incluye una etapa "Format check" que verifique el formato del código usando `npm run format:check`.
 
 6. **Chequeo de calidad de código**
-   - Incluye una etapa "Code quality" que verifique el formato del código usando `npm run lint`.
+   - Incluye una etapa "Code quality" que verifique la calidad del código usando `npm run lint`.
 
 7. **Chequeo de tipos**
    - Implementa una etapa "Type check" que ejecute la comprobación de tipos con `npm run type-check`.
