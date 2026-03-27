@@ -89,7 +89,7 @@ Esta rama parte de `dev`.
   title: "Opción 5",
   description: "Pull Request",
   message:
-    "Un Pull Request es una propuesta formal para incorporar cambios de una rama a otra. Permite revisar el código antes de mergear y deja un historial claro de qué se hizo y por qué.",
+    "Una Pull Request es una propuesta formal para incorporar cambios de una rama a otra. Permite revisar el código antes de mergear y deja un historial claro de qué se hizo y por qué.",
   featureFlag: false,
 },
 ```
@@ -143,7 +143,7 @@ description: "Flujo profesional",
 
 ### Tarea 4 — Pull Request 1: Feature A a `dev`
 
-1. Abre un Pull Request en GitHub desde `feature/opcion-5` hacia `dev`.
+1. Abre una Pull Request en GitHub desde `feature/opcion-5` hacia `dev`.
 2. Ponle como título: `feat: añadir Opción 5 y actualizar descripción de Opción 3`
 3. Antes de mergear, abre la pestaña **Files changed** y revisa el diff.
 4. Mergea el PR.
@@ -155,7 +155,7 @@ description: "Flujo profesional",
 
 ### Tarea 5 — Pull Request 2: Feature B a `dev`, conflicto
 
-1. Abre un Pull Request desde `feature/opcion-6` hacia `dev`.
+1. Abre una Pull Request desde `feature/opcion-6` hacia `dev`.
 2. GitHub detectará un conflicto. No podrá mergear automáticamente.
 3. Resuelve el conflicto **en local** siguiendo estos pasos:
    - Ponte en la rama `feature/opcion-6`
@@ -208,7 +208,7 @@ git branch -d feature/opcion-6
 
 ### Opcional 2 — PR final: `dev` a `main`
 
-1. Abre un Pull Request desde `dev` hacia `main`.
+1. Abre una Pull Request desde `dev` hacia `main`.
 2. Título: `release: Opciones 5 y 6 + mejoras Opción 3`
 3. Revisa **Files changed** y confirma que entran todos los cambios esperados.
 4. Mergea el PR.
