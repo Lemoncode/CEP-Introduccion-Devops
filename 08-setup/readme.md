@@ -2,97 +2,86 @@
 
 ## IDE
 
-El IDE que vamos a usar para este curso será [VSCode](https://code.visualstudio.com/). Para istalarlo, navegar a la siguiente [página de descarga](https://code.visualstudio.com/). En esta página encontraréis los instalables para los principales sistema operativos. Una vez descargada, la versión deseada ejecutar. 
+El IDE que utilizaremos en este curso será [VSCode](https://code.visualstudio.com/). Para instalarlo, navega a su [página de descarga](https://code.visualstudio.com/), donde encontrarás los instaladores para los principales sistemas operativos. Una vez descargada la versión deseada, procede con su ejecución e instalación.
 
 ## Git
 
-Para comprobar si Git está actualmente en nuestro sistema instalado, deberemos abrir una terminal y ejecutar el siguiente comando:
+Para comprobar si ya tienes Git instalado en tu sistema, abre una terminal y ejecuta el siguiente comando:
 
 ```bash
 git version
 ```
 
-En caso de que el resultado de ejecutar el comando anterior no devuelva algo simmilar a esto:
+Si el resultado no devuelve un mensaje similar al siguiente:
 
 ```
 git version <installed version> <version type by OS>
 ```
 
-Deberemos instalar Git, para ello podemos ir a la siguiente [página](https://git-scm.com/install) y seguir las instrucciones para nuestro sistema operativo.
+Deberás instalarlo. Para ello, accede a la [página oficial](https://git-scm.com/install) y sigue las instrucciones específicas para tu sistema operativo.
 
 ## NodeJS
 
-Para comprobar si Node está insatlado en nuestro sistema, abrir una terminal y ejecutar el siguiente comando:
+Para verificar si Node.js está instalado, ejecuta este comando en la terminal:
 
 ```bash
 node -v
 ```
 
-En caso de que el resultado de ejecutar el comando anterior no devuelva algo simmilar a esto:
+Si el resultado no muestra una versión similar a esta:
 
 ```
 v24.x.x
 ```
 
-Deberemos instalar NodeJS, para ello podemos ir a la siguiente [página](https://nodejs.org/en/download) y descargar el instalador para nuestro sistema operativo.
+Debes instalarlo descargando el instalador correspondiente a tu sistema operativo desde la [página oficial de NodeJS](https://nodejs.org/en/download).
 
 ## Guía de Instalación Docker Desktop
 
-Una de las formas más sencillas de poder ejecutar contenedores es a través de Docker Desktop. Si no tenemos Docker Desktop instalado, para instalarlo navegar a la siguiente [página](https://docs.docker.com/get-started/get-docker/). Seleccionamos el sistema operativo deseado, para realizar la instalación. A continuación algunos apuntes sobre los distintos sistemas operativos que deberías tener en cuenta antes de insatlar. 
+Docker Desktop es una de las formas más sencillas de ejecutar contenedores. Si no lo tienes instalado, ve a la [página de descargas de Docker](https://docs.docker.com/get-started/get-docker/) y selecciona tu sistema operativo.
+
+A continuación, se detallan algunos puntos importantes a tener en cuenta antes de la instalación según tu plataforma:
 
 ### Windows
 
-Para poder ejecutar Docker en Windows, debemos tener un sistema de virtualización habilitado, Hyper-V o WSL 2. Comprueba antes de realizar la instalación que tu entorno soporta las herramientas necesarias. En la guía de instalación de Windows, viene en detalle los pormenores a tener en cuenta.
+Para ejecutar Docker en Windows es necesario tener habilitado un sistema de virtualización, ya sea **Hyper-V** o **WSL 2**. Antes de comenzar, asegúrate de que tu entorno soporte estas herramientas. Encontrarás todos los pormenores técnicos en la guía de instalación de Windows.
 
 ### Mac OS
 
-En el case de Mac OS, si tu entorno utiliza el Apple Silicon chip, para una experiencia satisfactoria deberas instalar Rosetta. En la guía de instalación para Mac OS vienen los detalles de como instalar Rosetta.
+Si utilizas un equipo con chip **Apple Silicon**, necesitarás instalar **Rosetta** para garantizar una experiencia óptima. Los detalles sobre cómo realizar esta instalación se encuentran en la guía específica para Mac OS.
 
 ### Linux
 
-En Linux si lo deseamos podemos instalar simplemente el 'engine' de Docker y ejecutarlo como un servicio. En esta [página](https://docs.docker.com/engine/install/) podeis encntrar los detalles para este tipo de instalación. 
+En Linux existe la opción de instalar únicamente el motor de Docker (*Docker Engine*) y ejecutarlo como un servicio. Puedes consultar los detalles para este tipo de instalación en [esta página](https://docs.docker.com/engine/install/).
 
 ## Guía de Instalación K8s
 
 ### DevContainers
 
-Si tenemos instalado el [plugin Devcontainers](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers) en VSCode y podemos ejecutar Docker en nuestra máquina es posible levantar un cluster de K8s directamente desde VSCode. Para ello, en el raíz de nuestro proyecto crea una carpeta `.devcontainer` y crear el fichero `.devcontainer/devcontainer.json` con el siguiente conetnido:
+Si tienes instalado el [plugin DevContainers](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers) en VSCode y puedes ejecutar Docker, es posible levantar un clúster de Kubernetes directamente desde el editor.
+
+Para ello, crea una carpeta llamada `.devcontainer` en la raíz de tu proyecto y añade el archivo `.devcontainer/devcontainer.json` con el siguiente contenido:
 
 ```json
 // For format details, see https://aka.ms/devcontainer.json. For config options, see the
 // README at: https://github.com/devcontainers/templates/tree/main/src/ubuntu
 {
-	"name": "Ubuntu",
-	// Or use a Dockerfile or Docker Compose file. More info: https://containers.dev/guide/dockerfile
-	"image": "mcr.microsoft.com/devcontainers/base:noble",
-	"features": {
-		"ghcr.io/devcontainers/features/docker-in-docker:2": {},
-		"ghcr.io/devcontainers/features/kubectl-helm-minikube:1": {}
-	}
-
-	// Features to add to the dev container. More info: https://containers.dev/features.
-	// "features": {},
-
-	// Use 'forwardPorts' to make a list of ports inside the container available locally.
-	// "forwardPorts": [],
-
-	// Use 'postCreateCommand' to run commands after the container is created.
-	// "postCreateCommand": "uname -a",
-
-	// Configure tool-specific properties.
-	// "customizations": {},
-
-	// Uncomment to connect as root instead. More info: https://aka.ms/dev-containers-non-root.
-	// "remoteUser": "root"
+    "name": "Ubuntu",
+    "image": "mcr.microsoft.com/devcontainers/base:noble",
+    "features": {
+        "ghcr.io/devcontainers/features/docker-in-docker:2": {},
+        "ghcr.io/devcontainers/features/kubectl-helm-minikube:1": {}
+    }
 }
-
 ```
 
-Arranca Docker, si no está en ejecucion. Con Docker corriendo en nuestro sistema, abrimos la 'command pallete' de VSCode y veremos la siguiente opción:
+
+Asegúrate de que Docker esté en ejecución. Una vez confirmado, abre la paleta de comandos de VSCode (`Ctrl+Shift+P` o `Cmd+Shift+P`) y selecciona la siguiente opción:
+
 
 ![Reopen in container](.resources/01-reopen-in-container.png)
 
-Hacer click sobre la misma. Si es la primera vez que lo ejecutamos, tardará unos minutos. Una vez ha terminado, podemos comprobar el estado de `minikube` ejecutando:
+Haz clic en ella. Si es la primera vez, el proceso tardará unos minutos. Al finalizar, puedes comprobar el estado de `minikube` ejecutando:
 
 ```bash
 minikube status
@@ -100,20 +89,20 @@ minikube status
 
 ![Minikube status](.resources/02-minikube-status.png)
 
-Ahora podemos arrancar un cluster usando:
+Para arrancar el clúster, utiliza el comando:
 
 ```bash
 minikube start
 ```
 
-Pasados unos minutos veremos un mensaje como este:
+Tras unos instantes, verás un mensaje de confirmación como este:
 
 ![Minikube Running](.resources/03-minikube-running.png)
 
 ### Minikube
 
-También podemos instalar Minikube en 'bear metal', lo que nos da más opciones de virtualización, está puede ser una buena opción en el caso de que no podamos instalar Docker directamente en nuestra máquina. En la siguiente [página](https://minikube.sigs.k8s.io/docs/start/?arch=%2Fmacos%2Fx86-64%2Fstable%2Fbinary+download) podemos encontrar las instrucciones para arrancar con los principales sistemas operativos.
+También puedes instalar Minikube de forma nativa (*bare metal*), lo que ofrece más opciones de virtualización. Esta es una excelente alternativa si no puedes ejecutar Docker directamente en tu máquina. Encontrarás las instrucciones para los principales sistemas operativos en la [documentación oficial de Minikube](https://minikube.sigs.k8s.io/docs/start/?arch=%2Fmacos%2Fx86-64%2Fstable%2Fbinary+download).
 
 ### Kind
 
-Para poder ejecutar Kind, cómo pre requisito, Docker debe poderse ejecutar. Kind ofrece clusters de Kubernetes a través de contenedores de Docker, lo que lo convierte en una opción muy ligera. Para instalarlo podemos seguir los pasos en la siguiente [página](https://kind.sigs.k8s.io/docs/user/quick-start)
+Para utilizar Kind es imprescindible tener Docker instalado y en ejecución. Kind permite desplegar clústeres de Kubernetes mediante contenedores, lo que lo convierte en una opción sumamente ligera. Para instalarlo, sigue los pasos de su [guía de inicio rápido](https://kind.sigs.k8s.io/docs/user/quick-start).
