@@ -701,3 +701,13 @@ Vuelve a ponerlo a `true` y repite. Aparece de nuevo.
 > Esto es exactamente cómo funciona en proyectos reales: el mismo código corre en todos los entornos (desarrollo, staging, producción), pero cada entorno tiene sus propias variables. Activar o desactivar una feature en producción es solo cambiar un valor en el panel de la plataforma, sin tocar el código ni hacer un nuevo despliegue manual.
 
 ---
+
+# Más sobre Feature Flags,
+
+Aunque esto está fuera del alcance de este curso, unos apuntes:
+
+- Lo que hemos hecho con variables de entorno es algo primitivo.
+
+- Puedes empezar a usarlo pero envolverlo en una librería que después te permite ir transicionando a algo más avanzado pero sin tener que cambiar el código de la app cada vez, una opción es: https://openfeature.dev/
+
+- En proyectos reales, las feature flags suelen tener un panel de control propio, con segmentación por usuarios, métricas de uso, y otras funcionalidades avanzadas. Algunas opciones populares son LaunchDarkly, Split.io o Flagsmith, y se inyectan en tiempo de ejecución, así puedes actiar o desactivar sin necesidad de reiniciar la app.
