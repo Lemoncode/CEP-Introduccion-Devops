@@ -44,6 +44,22 @@ const OPTIONS: Option[] = [
 
 Añadir una nueva tarjeta es añadir un objeto a este array. Eso es lo que harás en la práctica. Cierra el servidor con `Ctrl+C` cuando estés listo para continuar.
 
+Si te fijas en el array hay tres elementos, pero sólo aparecen dos, esto pasa porque tenemos una variable de entorno que hace que la Opción 3 no se muestre, volveremos sobre esto más adelante.
+
+De momento vamos a crear un fichero `.env` y copiar el contenido de `.env.example` para que la app funcione correctamente:
+
+_./.env_
+
+```bash
+VITE_FEATURE_OPCION_3=true
+```
+
+Y ahora te estarás preguntando ¿Por qué no estaba este fichero .env en el repo? ¿Por qué no lo hemos clonado directamente? La respuesta es que el fichero `.env` suele contener datos sensibles (contraseñas, claves de API, tokens…) y no debería estar en Git. En su lugar, se incluye un `.env.example` que documenta qué variables existen y qué formato tienen, pero sin valores reales. Cada desarrollador copia ese `.env.example` a su propio `.env` local y lo configura con sus valores.
+
+De hecho si te fijas, en el `.gitignore` del proyecto está la línea `.env`, lo que significa que Git va a ignorar ese fichero, no lo va a trackear ni subir a GitHub, por eso cada uno tiene que tener su propio `.env` local.
+
+De hecho esto es tan importante, que si por error subes un `.env` con datos sensibles a GitHub, hay bots rastreando constantemente los repositorios públicos para encontrar este tipo de información. Si lo encuentran, no solo te van a avisar a ti, sino que también van a avisar a la empresa propietaria de esa clave (por ejemplo, si es una clave de AWS, se lo van a comunicar a Amazon) y la empresa va a revocar esa clave inmediatamente por seguridad. Así que cuidado con esto.
+
 ---
 
 ## 1. Fork — crear tu propia copia del repositorio
@@ -142,7 +158,6 @@ Crea la rama `dev` y súbela a tu fork:
 
 Este comando crea una rama nueva llamada dev en local (en tu máquina) y te cambia a ella
 
-
 ```bash
 git switch -c dev
 ```
@@ -179,7 +194,7 @@ Vamos a crear una rama nueva para implementar un nuevo caso.
 git switch -c feature/opcion-4
 ```
 
-Después del primer comando estás en `dev`. El segundo crea la rama `feature/opcion-4` a partir de ese punto exacto.
+> Con este comando, con `-c` creamos la rama, y con switch nos cambiamos a ella directamente, se podría haber hecho con dos comandos `git branch feature/opcion-4` para crear la rama, y luego `git switch feature/opcion-4` para cambiar a ella, pero con `-c` lo hacemos todo en uno.
 
 ### Qué cambiar
 
@@ -212,7 +227,11 @@ description: "Ramas",
 description: "Ramas de Git",
 ```
 
-Estos dos cambios son independientes pero los hacemos en la misma feature branch. En el mundo real ocurre constantemente: mientras trabajas en algo, notas una pequeña mejora y la incluyes en el mismo commit o en un commit separado.
+Estos dos cambios son independientes pero los hacemos en la misma feature branch, esto puede generar polémica y no siempre hay solución clara:
+
+- Lo normal es que las ramas sean lo más pequeñas posibles y no metan ruido, es decir sólo hagan lo que se define en el caso, así el revisor puede centrarse solo en eso, y el historial queda más limpio.
+
+- Hay veces que nos saltamos esa regla, e incluso existe la regla del "buen boy scout" en la que se dice que si mientras estás trabajando en algo ves una pequeña mejora, no hace falta crear una rama nueva solo para eso, sino que puedes incluir esa mejora en la misma rama, esa regla que de primeras parece bien intencionda, después te puede traer muchos dolores de cabeza.
 
 ### Verificar en el navegador
 
@@ -224,13 +243,25 @@ Abre <http://localhost:5173>. Deberías ver ahora cuatro tarjetas. La cuarta abr
 
 ### Commit y push
 
+Aquí podemos pasar el fichero de app.tsx a staging, que es como decirle a Git "este fichero ya lo tengo listo para confirmar, lo quiero incluir en el próximo commit". El comando para eso es `git add`, y o bien le pasamos el nombre del fichero, o le pasamos un punto para decirle que añada todos los cambios que hay en el proyecto.
+
 ```bash
 git add src/app.tsx
+```
+
+Ahora podemos guardarlo en nuestra base de datos local de Git, que es lo que hace el commit, y le tenemos que poner un mensaje que describa el cambio que hemos hecho, para eso usamos `git commit -m "mensaje descriptivo del cambio"`
+
+```bash
 git commit -m "feat: añadir Opción 4 y mejorar descripción de Opción 2"
+```
+
+Y finalmente, para subirlo a nuestro repositorio remoto en GitHub, usamos `git push`. El flag `-u` es para decirle que queremos que esta rama se asocie con la rama del mismo nombre en el remoto, así en el futuro solo con `git push` ya sabrá a dónde subir los cambios.
+
+```bash
 git push -u origin feature/opcion-4
 ```
 
-Si después del `git add` ejecutas `git diff --staged` puedes ver exactamente qué has marcado para el commit, línea a línea. Es un buen hábito antes de confirmar.
+> Si después del `git add` ejecutas `git diff --staged` puedes ver exactamente qué has marcado para el commit, línea a línea. Es un buen hábito antes de confirmar.
 
 ---
 
@@ -253,11 +284,12 @@ Sustituye el campo `message` de la Opción 2:
 ```tsx
 // Antes:
 message:
-  "Una rama es como una línea de tiempo alternativa de tu código. Puedes experimentar, cometer errores y fusionar solo lo que funciona, sin afectar nunca a main.",
+  "Una rama es una línea de desarrollo independiente. Puedes crear, fusionar y eliminar ramas sin afectar a main.",
 
 // Después:
 message:
-  "Una rama es una línea de desarrollo independiente. Puedes crear, fusionar y eliminar ramas sin afectar a main.",
+  "Una rama es como una línea de tiempo alternativa de tu código. Puedes experimentar, cometer errores y fusionar solo lo que funciona, sin afectar nunca a main.",
+
 ```
 
 **Cambio 2 — cambiar la descripción corta.**
@@ -305,6 +337,10 @@ Una vez creado, verás el botón **Merge pull request**. Haz clic en él → **C
 
 GitHub te confirma que el merge se ha hecho correctamente. La Feature 1 ya está en `dev`.
 
+> Aquí también podemos indicar que borre la rama para ahorrar espacio. Además, se puede configurar el repositorio para que elimine automáticamente la rama después del merge.
+
+> Otro tema interesante de configuración es que podemos indicarle a Github que no permita hacer merge a `dev`, sin pasar por una PR, o si no se ha pasado una revisión de código, o si no han pasado los tests, o si no se ha actualizado la rama con los últimos cambios de `dev`, etc. Esto es para garantizar que `dev` siempre esté en un estado estable.
+
 ### Actualizar tu copia local
 
 El merge se hizo en GitHub, pero tu `dev` local todavía no lo sabe. Tráelo:
@@ -315,6 +351,8 @@ git pull origin dev
 ```
 
 `git pull` hace dos cosas: primero `git fetch` (descarga los cambios del remote) y luego `git merge` (los fusiona en tu rama local). Ahora tu `dev` local tiene la Opción 4 y la descripción "Ramas de Git" en la Opción 2.
+
+> Sobre el mensaje de fast forward: “Fast-forward” significa que tu rama no tenía cambios propios, así que Git solo la mueve hacia adelante para ponerse igual que la remota, sin mezclar nada (Esto se puede configurar, también se puede obligar a que haga un commit de merge aunque no haya nada que mezclar, pero lo habitual es que si no hay nada que mezclar, haga un fast forward para mantener el historial más limpio).
 
 ---
 
@@ -339,7 +377,7 @@ Un conflicto no es un error ni un fallo tuyo. Es Git siendo honesto: hay dos ver
 
 ## 9. Resolver el conflicto
 
-Los conflictos se resuelven siempre en local, nunca directamente en GitHub. El proceso es:
+Donde mejor se resuelven los conflictos es en local, nunca directamente en GitHub. El proceso es:
 
 1. Traer los cambios de `dev` a tu rama `feature/mejorar-opcion2`
 2. Decirle a Git qué versión conservar (o combinar ambas)
@@ -429,6 +467,8 @@ git add src/app.tsx
 git commit -m "merge: resolver conflicto de descripción en Opción 2"
 git push origin feature/mejorar-opcion2
 ```
+
+> En VS Code aparece Sync Changes (3) porque tu rama local feature/mejorar-opcion2 está 3 commits por delante de origin/feature/mejorar-opcion2. Son los 2 commits que trajiste de dev + el commit de merge al resolver el conflicto.
 
 ### Paso 7 — Mergear el PR en GitHub
 
@@ -627,7 +667,7 @@ Recuerda que el fichero `.env` está en `.gitignore` y nunca llega al servidor. 
 
 1. Ve a **Settings → Secrets and variables → Actions**
 2. Haz clic en la pestaña **Variables** (no Secrets, porque esto no es un dato sensible)
-3. Crea una nueva variable:
+3. Crea una nueva variable (new repository variable)
 
 ```
 Nombre:  VITE_FEATURE_OPCION_3
