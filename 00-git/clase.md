@@ -8,7 +8,7 @@ Al final de la clase habrás pasado por todo el ciclo de vida de un cambio en un
 
 ## 0. Puesta en marcha — ver la app antes de tocar nada
 
-Antes de hacer nada con Git, arranca la app para entender qué vas a modificar.
+Antes de hacer nada con Git, arranca la app para entender qué vas a modificar (te puedes coonar este repo: https://github.com/Lemoncode/punto-partida-practica-modulo-git)
 
 ```bash
 cd proyecto-demo
@@ -90,13 +90,21 @@ Para el resto de la práctica cierra el servidor con `Ctrl+C` — lo arrancarás
 
 ## 3. Configurar los dos remotes — `origin` y `upstream`
 
-Un **remote** es simplemente un nombre que Git usa para referirse a una URL de repositorio remoto. Cuando clonaste, Git registró automáticamente uno llamado `origin` que apunta a tu fork. Pero el repositorio del instructor todavía no está registrado. Añádelo:
+Un **remote** es simplemente un nombre que Git usa para referirse a una URL de repositorio remoto. Cuando clonaste, Git registró automáticamente uno llamado `origin` que apunta a tu fork, lo puedes comprobar con:
+
+```bash
+git remote -v
+```
+
+Si te fijas solo nos sale un remote que se llama `origin` y apunta a tu fork, es decir Github si que sabe que el repositorio original existe, pero no lo ha registrado como un remote en Git.
+
+> Una curiosidad, si te fijas salen dos url una para `fetch` y otra para `push`, pero ambas apuntan al mismo sitio. Esto es porque Git permite configurar URLs distintas para cada operación, aunque lo habitual es que sean iguales, un ejemplo de configuración distinta, podría ser que un repo publico open source permites que se baje por HTTP pero solo se pueda subir por SSH (por seguridad), entonces tendrías dos URLs distintas, una con `https://` y otra con `git@`, otra opción en un proceso de CI/CD es que el pipeline lea de un repo, pero haga push a otro repo distinto, entonces tendrías dos URLs distintas, una para `fetch` y otra para `push`.
+
+Vamos a registrar el repositorio original y le damos como nombre `upstream` (es una convención habitual):
 
 ```bash
 git remote add upstream https://github.com/Lemoncode/punto-partida-practica-modulo-git.git
 ```
-
-Sustituye `<instructor>` por el usuario GitHub del instructor.
 
 Ahora comprueba que tienes los dos:
 
@@ -122,7 +130,7 @@ La convención es siempre la misma:
 
 ## 4. Crear la rama `dev`
 
-En proyectos profesionales nunca se trabaja directamente en `main`. La rama `main` representa el código que está (o podría estar) en producción: tiene que ser siempre estable.
+En proyectos reales es raro que se trabaje directamente en `main`. La rama `main` representa el código que está (o podría estar) en producción: lo ideal es que sea siempre estable.
 
 El flujo habitual es:
 
@@ -132,14 +140,24 @@ El flujo habitual es:
 
 Crea la rama `dev` y súbela a tu fork:
 
+Este comando crea una rama nueva llamada dev en local (en tu máquina) y te cambia a ella
+
+
 ```bash
 git switch -c dev
+```
+
+Y ahora en este comando: Sube mi rama local dev al remoto origin y deja todo preparado para no tener que especificarlo otra vez (-u es --set-upstream)
+
+```bash
 git push -u origin dev
 ```
 
-El flag `-u` le dice a Git que en el futuro, cuando estés en la rama `dev` y ejecutes `git push` o `git pull` sin más argumentos, lo haga contra `origin/dev`. Solo hace falta ponerlo la primera vez.
+El flag `-u` le dice a Git que en el futuro, cuando estés en la rama `dev` y ejecutes `git push` o `git pull` sin más argumentos, lo haga contra `origin/dev` (es decir el nombre de la rama `dev` va a ser el mismo en local y remoto). Solo hace falta ponerlo la primera vez.
 
 Ve a GitHub y comprueba que la rama `dev` aparece en tu repositorio (desplegable de ramas).
+
+> Ojo, aquí estamos simulando que estamos trabajando en un repositorio nuestros, si quisieramos colaborar con el repo original, en vez de crear rama `dev`, crearíamos directamente rama `feature/xxx` a partir de `main`, y pediríamos un PR directo al `main`
 
 ---
 
@@ -147,8 +165,17 @@ Ve a GitHub y comprueba que la rama `dev` aparece en tu repositorio (desplegable
 
 Las features siempre se crean desde `dev`, nunca desde `main`. Así, si necesitas hacer cambios urgentes en producción, `main` está limpia y puedes trabajar sobre ella sin arrastrar trabajo en curso.
 
+Si nos queremos asegurar de que estamos en dev podemos ejecutar:
+
 ```bash
 git switch dev
+```
+
+> Si quiero saber en que rama estoy, puedo ejecutar `git branch` y me va a mostrar todas las ramas locales, y la que tengo activa va a tener un asterisco al lado.
+
+Vamos a crear una rama nueva para implementar un nuevo caso.
+
+```bash
 git switch -c feature/opcion-4
 ```
 
