@@ -1,5 +1,5 @@
+import type { RecipeInput, Recipe, NonInputRecipeKeys } from "../recipes/recipes.model";
 import { prisma } from "../prisma";
-import { type RecipeInput, type Recipe, type NonInputRecipeKeys } from "../recipes/recipes.model";
 
 export const clearRecipes = async (): Promise<void> => {
   await prisma.recipes.deleteMany({});
@@ -7,15 +7,15 @@ export const clearRecipes = async (): Promise<void> => {
 
 export type RecipeWithOrWithoutNonInputKeys = RecipeInput & Partial<Pick<Recipe, NonInputRecipeKeys>>;
 
-const mapRecipeInputToInsertData = (data: RecipeWithOrWithoutNonInputKeys) => {
+const mapRecipeInputToInsertData = (data: RecipeWithOrWithoutNonInputKeys): Omit<Recipe, "id"> => {
   const now = new Date();
 
   return {
     ...data,
     createdAt: data.createdAt ?? now,
-    updatedAt: data.updatedAt ?? now,
-    servings: data.servings ?? null,
     description: data.description ?? null,
+    servings: data.servings ?? null,
+    updatedAt: data.updatedAt ?? now,
   };
 };
 

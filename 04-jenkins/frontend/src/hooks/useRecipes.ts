@@ -1,6 +1,6 @@
 import { useQuery, useMutation } from "@tanstack/react-query";
-import { recipeApi } from "../lib/api";
-import type { CreateRecipeInput } from "../types/recipe";
+import type { CreateRecipeInput, UpdateRecipeInput } from "@/types/recipe";
+import { recipeApi } from "@/lib/api";
 
 export function useRecipes() {
   return useQuery({
@@ -25,7 +25,7 @@ export function useCreateRecipe() {
 
 export function useUpdateRecipe() {
   return useMutation({
-    mutationFn: ({ id, ...data }: { id: string } & CreateRecipeInput) => recipeApi.update(id, data),
+    mutationFn: ({ id, ...data }: UpdateRecipeInput) => recipeApi.update(id, data),
   });
 }
 

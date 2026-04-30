@@ -1,7 +1,7 @@
 import { Link } from "@tanstack/react-router";
-import { useRecipes } from "../hooks/useRecipes";
-import RecipeCard from "../components/recipe-card";
-import Heading from "../components/heading";
+import Heading from "@/components/heading";
+import RecipeCard from "@/components/recipe-card";
+import { useRecipes } from "@/hooks/useRecipes";
 
 export default function IndexPage() {
   const { data: recipes = [], isLoading, error } = useRecipes();
@@ -27,7 +27,7 @@ export default function IndexPage() {
     return (
       <div className="flex flex-col items-center justify-center py-20">
         <p className="font-display text-2xl font-bold text-charcoal">No recipes yet</p>
-        <p className="font-body text-charcoal/60 mt-2">Create your first recipe to get started</p>
+        <p className="mt-2 font-body text-charcoal/60">Create your first recipe to get started</p>
         <Link to="/recipes/new" className="btn-primary mt-6">
           Create Recipe
         </Link>

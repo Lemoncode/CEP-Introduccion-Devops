@@ -1,9 +1,9 @@
-import { type Request, type Response } from "express";
 import { afterAll, beforeEach, describe, expect, it, type Mock, vi } from "vitest";
 import { type DeepMockProxy, mockDeep } from "vitest-mock-extended";
-import { z } from "zod";
+import type { Request, Response } from "express";
+import z from "zod";
+import type { Recipe, RecipeInput } from "./recipes.model";
 import { recipesController } from "./recipes.controller";
-import { type Recipe, type RecipeInput } from "./recipes.model";
 import { recipesService as recipesServiceOriginal } from "./recipes.service";
 
 const recipesService = recipesServiceOriginal as unknown as DeepMockProxy<typeof recipesServiceOriginal>;
@@ -30,22 +30,22 @@ describe("recipes.controller", () => {
     send = vi.fn();
     status = vi.fn((_code) => ({ json, send }) as unknown as Response);
     req = {} as Request;
-    res = { json, status, send } as unknown as Response;
+    res = { json, send, status } as unknown as Response;
   });
 
   describe("getRecipes", () => {
     it("returns recipes", async () => {
       const fakeRecipes: Recipe[] = [
         {
-          id: "69b62807f8886db9bdffc570",
-          title: "Tortilla",
+          createdAt: new Date(),
           description: "Spanish omelette",
           difficulty: "easy",
+          id: "69b62807f8886db9bdffc570",
+          ingredients: ["egg", "potato", "onion"],
           prepTime: 10,
           servings: 2,
-          ingredients: ["egg", "potato", "onion"],
           steps: ["Peel potatoes", "Beat eggs", "Fry everything"],
-          createdAt: new Date(),
+          title: "Tortilla",
           updatedAt: new Date(),
         },
       ];
@@ -59,15 +59,15 @@ describe("recipes.controller", () => {
     it("returns recipe if found", async () => {
       req.params = { id: "69b62807f8886db9bdffc570" };
       const fakeRecipe: Recipe = {
-        id: "69b62807f8886db9bdffc570",
-        title: "Tortilla",
+        createdAt: new Date(),
         description: "Spanish omelette",
         difficulty: "easy",
+        id: "69b62807f8886db9bdffc570",
+        ingredients: ["egg", "potato", "onion"],
         prepTime: 10,
         servings: 2,
-        ingredients: ["egg", "potato", "onion"],
         steps: ["Peel potatoes", "Beat eggs", "Fry everything"],
-        createdAt: new Date(),
+        title: "Tortilla",
         updatedAt: new Date(),
       };
       recipesService.getRecipeById.mockResolvedValue(fakeRecipe);
@@ -88,13 +88,13 @@ describe("recipes.controller", () => {
       await recipesController.getRecipeById(req, res);
       expect(status).toHaveBeenCalledWith(400);
       expect(json).toHaveBeenCalledWith({
-        error: "Invalid data",
         details: {
           fieldErrors: {
             id: ["Invalid id"],
           },
           formErrors: [],
         },
+        error: "Invalid data",
       });
     });
 
@@ -121,29 +121,29 @@ describe("recipes.controller", () => {
       await recipesController.createRecipe(req, res);
       expect(status).toHaveBeenCalledWith(400);
       expect(json).toHaveBeenCalledWith({
-        error: "Invalid data",
         details: {
           fieldErrors: {
             title: ["Required field"],
           },
           formErrors: [],
         },
+        error: "Invalid data",
       });
     });
 
     it("creates and returns recipe", async () => {
       const partialRecipe: RecipeInput = {
-        title: "Tortilla",
         difficulty: "easy",
-        prepTime: 10,
         ingredients: ["egg"],
+        prepTime: 10,
         steps: ["mix"],
+        title: "Tortilla",
       };
       req.body = partialRecipe;
       const fakeRecipe: Recipe = {
         ...req.body,
-        id: "69b62807f8886db9bdffc570",
         createdAt: new Date(),
+        id: "69b62807f8886db9bdffc570",
         updatedAt: new Date(),
       };
       recipesService.createRecipe.mockResolvedValue(fakeRecipe);
@@ -167,13 +167,13 @@ describe("recipes.controller", () => {
       await recipesController.updateRecipe(req, res);
       expect(status).toHaveBeenCalledWith(400);
       expect(json).toHaveBeenCalledWith({
-        error: "Invalid data",
         details: {
           fieldErrors: {
             id: ["Invalid id"],
           },
           formErrors: [],
         },
+        error: "Invalid data",
       });
     });
 
@@ -191,13 +191,13 @@ describe("recipes.controller", () => {
       await recipesController.updateRecipe(req, res);
       expect(status).toHaveBeenCalledWith(400);
       expect(json).toHaveBeenCalledWith({
-        error: "Invalid data",
         details: {
           fieldErrors: {
             title: ["Required field"],
           },
           formErrors: [],
         },
+        error: "Invalid data",
       });
     });
 
@@ -206,14 +206,14 @@ describe("recipes.controller", () => {
       req.body = partialRecipe;
       req.params = { id: "69b62807f8886db9bdffc570" };
       const fakeRecipe: Recipe = {
-        id: "69b62807f8886db9bdffc570",
+        createdAt: new Date(),
         description: "Spanish omelette",
         difficulty: "easy",
+        id: "69b62807f8886db9bdffc570",
+        ingredients: ["egg", "potato", "onion"],
         prepTime: 10,
         servings: 2,
-        ingredients: ["egg", "potato", "onion"],
         steps: ["Peel potatoes", "Beat eggs", "Fry everything"],
-        createdAt: new Date(),
         updatedAt: new Date(),
         ...partialRecipe,
       };
@@ -237,27 +237,27 @@ describe("recipes.controller", () => {
       await recipesController.deleteRecipe(req, res);
       expect(status).toHaveBeenCalledWith(400);
       expect(json).toHaveBeenCalledWith({
-        error: "Invalid data",
         details: {
           fieldErrors: {
             id: ["Invalid id"],
           },
           formErrors: [],
         },
+        error: "Invalid data",
       });
     });
 
     it("deletes and returns 204", async () => {
       const fakeRecipe: Recipe = {
-        id: "69b62807f8886db9bdffc570",
-        title: "Tortilla",
+        createdAt: new Date(),
         description: "Spanish omelette",
         difficulty: "easy",
+        id: "69b62807f8886db9bdffc570",
+        ingredients: ["egg", "potato", "onion"],
         prepTime: 10,
         servings: 2,
-        ingredients: ["egg", "potato", "onion"],
         steps: ["Peel potatoes", "Beat eggs", "Fry everything"],
-        createdAt: new Date(),
+        title: "Tortilla",
         updatedAt: new Date(),
       };
       req.params = { id: "69b62807f8886db9bdffc570" };

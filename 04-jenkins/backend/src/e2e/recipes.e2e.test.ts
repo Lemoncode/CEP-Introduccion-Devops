@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { Recipe, RecipeInput } from "../recipes/recipes.model";
+import type { Recipe, RecipeInput } from "../recipes/recipes.model";
 import { insertRecipe, insertRecipes } from "./db-helpers";
 import { getRecipeById, type RecipeWithOrWithoutNonInputKeys } from "./recipes.e2e-helpers";
 import { request } from "./setup-e2e";
@@ -8,18 +8,18 @@ describe("[E2E] Recipes API", () => {
   it("GET /api/recipes should return 2 recipes if 2 are inserted", async () => {
     const recipesDraft: RecipeWithOrWithoutNonInputKeys[] = [
       {
-        title: "Tortilla",
         difficulty: "easy",
-        prepTime: 10,
         ingredients: ["egg", "potato"],
+        prepTime: 10,
         steps: ["Beat eggs", "Fry potatoes"],
+        title: "Tortilla",
       },
       {
-        title: "Paella",
         difficulty: "hard",
-        prepTime: 60,
         ingredients: ["rice", "seafood"],
+        prepTime: 60,
         steps: ["Cook rice", "Add seafood"],
+        title: "Paella",
       },
     ];
     await insertRecipes(recipesDraft);
@@ -42,11 +42,11 @@ describe("[E2E] Recipes API", () => {
 
   it("POST /api/recipes should create a recipe", async () => {
     const recipeDraft: RecipeWithOrWithoutNonInputKeys = {
-      title: "Tortilla",
       difficulty: "easy",
-      prepTime: 10,
       ingredients: ["egg", "potato"],
+      prepTime: 10,
       steps: ["Beat eggs", "Fry potatoes"],
+      title: "Tortilla",
     };
     const res = await request.post("/api/recipes").send(recipeDraft).set("Content-Type", "application/json");
 
@@ -62,11 +62,11 @@ describe("[E2E] Recipes API", () => {
 
   it("GET /api/recipes/:id should return the created recipe", async () => {
     const recipe = await insertRecipe({
-      title: "Tortilla",
       difficulty: "easy",
-      prepTime: 10,
       ingredients: ["egg", "potato"],
+      prepTime: 10,
       steps: ["Beat eggs", "Fry potatoes"],
+      title: "Tortilla",
     });
     const res = await request.get(`/api/recipes/${recipe.id}`);
     expect(res.status).toBe(200);
@@ -84,19 +84,19 @@ describe("[E2E] Recipes API", () => {
 
   it("PUT /api/recipes/:id should update the recipe", async () => {
     const recipe = await insertRecipe({
-      title: "Tortilla",
       difficulty: "easy",
-      prepTime: 10,
       ingredients: ["egg", "potato"],
+      prepTime: 10,
       steps: ["Beat eggs", "Fry potatoes"],
+      title: "Tortilla",
     });
 
     const recipeDraft: RecipeInput = {
-      title: "Tortilla updated",
       difficulty: "medium",
-      prepTime: 15,
       ingredients: ["egg", "potato", "onion"],
+      prepTime: 15,
       steps: ["Beat eggs", "Fry potatoes", "Add onion"],
+      title: "Tortilla updated",
     };
     const res = await request.put(`/api/recipes/${recipe.id}`).send(recipeDraft).set("Content-Type", "application/json");
 
@@ -112,11 +112,11 @@ describe("[E2E] Recipes API", () => {
 
   it("DELETE /api/recipes/:id should delete the recipe", async () => {
     const recipe = await insertRecipe({
-      title: "Tortilla",
       difficulty: "easy",
-      prepTime: 10,
       ingredients: ["egg", "potato"],
+      prepTime: 10,
       steps: ["Beat eggs", "Fry potatoes"],
+      title: "Tortilla",
     });
     const res = await request.delete(`/api/recipes/${recipe.id}`);
     expect(res.status).toBe(204);

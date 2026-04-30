@@ -22,3 +22,7 @@ export interface CreateRecipeInput {
   ingredients?: string[];
   steps?: string[];
 }
+
+export interface UpdateRecipeInput extends CreateRecipeInput {
+  id: string;
+}

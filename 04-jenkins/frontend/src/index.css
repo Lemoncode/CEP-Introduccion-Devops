@@ -31,7 +31,7 @@
   }
 
   .btn-small {
-    @apply rounded-lg border-2 border-terracotta bg-terracotta border-indigo-500/10 px-6 py-3 h-fit text-sm font-medium text-white transition-colors hover:bg-terracotta/90 hover:border-terracotta/10 leading-6;
+    @apply h-fit rounded-lg border-2 border-indigo-500/10 border-terracotta bg-terracotta px-6 py-3 text-sm leading-6 font-medium text-white transition-colors hover:border-terracotta/10 hover:bg-terracotta/90;
   }
 
   .card {

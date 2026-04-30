@@ -5,31 +5,31 @@ Frontend Recipes application built with React, TypeScript, Vite, and Tailwind CS
 ## Quick Start
 
 ```bash
-# Install dependencies with Bun
-bun install
+# Install dependencies
+npm install
 
 # Start dev server
-bun run dev
+npm start
 
 # Type check
-bun run type-check
+npm run type-check
 
 # Format check
-bun run format:check
+npm run format:check
 
 # Lint
-bun run lint
+npm run lint
 
 # Build for production
-bun run build
+npm run build
 
 # Run tests
-bun run test
+npm test
 ```
 
 ## Project Structure
 
-```
+```txt
 src/
   components/     # React components (RecipeCard, RecipeForm, etc.)
   hooks/          # Custom hooks for API integration
@@ -44,7 +44,7 @@ src/
 
 Copy `.env.example` to `.env` and configure:
 
-```
+```ini
 VITE_API_URL=http://localhost:3000/api
 ```
 

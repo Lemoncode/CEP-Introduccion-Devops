@@ -1,7 +1,7 @@
-import { Router } from "express";
+import { Router as createRouter } from "express";
 import { healthController } from "./health.controller";
 
-const healthRouter = Router();
+const healthRouter = createRouter();
 
 healthRouter.get("/", healthController.getHealth);
 

@@ -1,9 +1,9 @@
 import { afterAll, beforeEach, describe, expect, it, vi } from "vitest";
 import { type DeepMockProxy, mockDeep } from "vitest-mock-extended";
-import { z } from "zod";
+import z from "zod";
+import type { PrismaClient } from "../prisma/client";
+import type { Recipe, RecipeInput } from "./recipes.model";
 import { prisma as originalPrisma } from "../prisma";
-import { PrismaClient } from "../prisma/client";
-import { type Recipe, type RecipeInput } from "./recipes.model";
 import { recipesService } from "./recipes.service";
 
 vi.mock(import("../prisma"), () => ({
@@ -17,6 +17,7 @@ afterAll(() => {
   vi.restoreAllMocks();
 });
 
+// oxlint-disable-next-line max-lines-per-function
 describe("recipesService", () => {
   beforeEach(() => {
     vi.clearAllMocks();
@@ -25,15 +26,15 @@ describe("recipesService", () => {
   it("getRecipes returns recipes", async () => {
     const fakeRecipes: Recipe[] = [
       {
-        id: "69b62807f8886db9bdffc570",
-        title: "Tortilla",
+        createdAt: new Date(),
         description: "desc",
         difficulty: "easy",
+        id: "69b62807f8886db9bdffc570",
+        ingredients: ["egg"],
         prepTime: 10,
         servings: 2,
-        ingredients: ["egg"],
         steps: ["mix"],
-        createdAt: new Date(),
+        title: "Tortilla",
         updatedAt: new Date(),
       },
     ];
@@ -50,15 +51,15 @@ describe("recipesService", () => {
 
   it("getRecipeById returns recipe if exists", async () => {
     const fakeRecipe: Recipe = {
-      id: "69b62807f8886db9bdffc570",
-      title: "Tortilla",
+      createdAt: new Date(),
       description: "desc",
       difficulty: "easy",
+      id: "69b62807f8886db9bdffc570",
+      ingredients: ["egg"],
       prepTime: 10,
       servings: 2,
-      ingredients: ["egg"],
       steps: ["mix"],
-      createdAt: new Date(),
+      title: "Tortilla",
       updatedAt: new Date(),
     };
     prisma.recipes.findUnique.mockResolvedValue(fakeRecipe);
@@ -80,15 +81,15 @@ describe("recipesService", () => {
 
   it("deleteRecipeById deletes existing recipe", async () => {
     const deletedRecipe: Recipe = {
-      id: "69b62807f8886db9bdffc570",
-      title: "Tortilla",
+      createdAt: new Date(),
       description: "desc",
       difficulty: "easy",
+      id: "69b62807f8886db9bdffc570",
+      ingredients: ["egg"],
       prepTime: 10,
       servings: 2,
-      ingredients: ["egg"],
       steps: ["mix"],
-      createdAt: new Date(),
+      title: "Tortilla",
       updatedAt: new Date(),
     };
     prisma.recipes.delete.mockResolvedValue(deletedRecipe);
@@ -98,15 +99,15 @@ describe("recipesService", () => {
 
   it("deleteRecipeById deletes non existing recipe", async () => {
     const deletedRecipe: Recipe = {
-      id: "69b62807f8886db9bdffc570",
-      title: "Tortilla",
+      createdAt: new Date(),
       description: "desc",
       difficulty: "easy",
+      id: "69b62807f8886db9bdffc570",
+      ingredients: ["egg"],
       prepTime: 10,
       servings: 2,
-      ingredients: ["egg"],
       steps: ["mix"],
-      createdAt: new Date(),
+      title: "Tortilla",
       updatedAt: new Date(),
     };
     prisma.recipes.delete.mockResolvedValue(deletedRecipe);
@@ -116,18 +117,18 @@ describe("recipesService", () => {
 
   it("createRecipe validates and creates recipe", async () => {
     const draft = {
-      title: "Tortilla",
       difficulty: "easy",
-      prepTime: 10,
       ingredients: ["egg"],
+      prepTime: 10,
       steps: ["mix"],
+      title: "Tortilla",
     } satisfies RecipeInput;
 
     const fakeRecipe: Recipe = {
+      createdAt: new Date(),
+      description: null,
       id: "69b62807f8886db9bdffc570",
       servings: null,
-      description: null,
-      createdAt: new Date(),
       updatedAt: new Date(),
       ...draft,
     };
@@ -139,11 +140,11 @@ describe("recipesService", () => {
 
   it("createRecipe throws validation error", async () => {
     const draft = {
-      title: "", // Invalid value
       difficulty: "easy",
-      prepTime: 10,
       ingredients: ["egg"],
+      prepTime: 10,
       steps: ["mix"],
+      title: "",
     } satisfies RecipeInput;
     const promise = recipesService.createRecipe(draft);
     await expect(promise).rejects.toBeInstanceOf(z.ZodError);
@@ -152,25 +153,25 @@ describe("recipesService", () => {
 
   it("updateRecipe validates and updates recipe", async () => {
     const draft = {
-      title: "Tortilla",
       difficulty: "easy",
-      prepTime: 10,
       ingredients: ["egg"],
+      prepTime: 10,
       steps: ["mix"],
+      title: "Tortilla",
     } satisfies RecipeInput;
     const fakeRecipe: Recipe = {
+      createdAt: new Date(),
+      description: null,
       id: "69b62807f8886db9bdffc570",
       servings: null,
-      description: null,
-      createdAt: new Date(),
       updatedAt: new Date(),
       ...draft,
     };
     prisma.recipes.update.mockResolvedValue(fakeRecipe);
     const result = await recipesService.updateRecipe("69b62807f8886db9bdffc570", draft);
     expect(prisma.recipes.update).toHaveBeenCalledWith({
-      where: { id: "69b62807f8886db9bdffc570" },
       data: expect.objectContaining(draft),
+      where: { id: "69b62807f8886db9bdffc570" },
     });
     expect(result).toMatchObject({ ...draft, id: "69b62807f8886db9bdffc570" });
   });
@@ -183,11 +184,11 @@ describe("recipesService", () => {
 
   it("updateRecipe throws validation error", async () => {
     const draft = {
-      title: "", // Invalid value
       difficulty: "easy",
-      prepTime: 10,
       ingredients: ["egg"],
+      prepTime: 10,
       steps: ["mix"],
+      title: "",
     } satisfies RecipeInput;
     const promise = recipesService.updateRecipe("69b62807f8886db9bdffc570", draft);
     await expect(promise).rejects.toBeInstanceOf(z.ZodError);

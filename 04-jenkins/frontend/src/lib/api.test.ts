@@ -1,7 +1,7 @@
+import { describe, expect, it, vi } from "vitest";
 import { mockDeep, type DeepMockProxy } from "vitest-mock-extended";
 import aixosOriginal, { type AxiosInstance } from "axios";
-import { describe, expect, it, vi } from "vitest";
-import type { CreateRecipeInput, Recipe } from "../types/recipe";
+import type { CreateRecipeInput, Recipe } from "@/types/recipe";
 import { recipeApi } from "./api";
 
 vi.mock("axios", () => {

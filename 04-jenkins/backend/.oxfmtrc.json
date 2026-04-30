@@ -1,9 +1,37 @@
 {
   "$schema": "./node_modules/oxfmt/configuration_schema.json",
-  "ignorePatterns": ["src/prisma"],
-  "printWidth": 150,
   "arrowParens": "always",
-  "semi": true,
+  "bracketSpacing": true,
   "endOfLine": "lf",
-  "useTabs": false
+  "fluid": false,
+  "jsxBracketSameLine": false,
+  "printWidth": 150,
+  "semi": true,
+  "singleQuote": false,
+  "tabWidth": 2,
+  "trailingComma": "all",
+  "useTabs": false,
+  "ignorePatterns": ["src/prisma"],
+  "sortPackageJson": {
+    "sortScripts": true
+  },
+  "sortImports": {
+    "newlinesBetween": false,
+    "customGroups": [
+      {
+        "groupName": "vitest",
+        "elementNamePattern": ["vitest", "vitest-**"]
+      }
+    ],
+    "groups": [
+      "vitest",
+      "type-import",
+      ["value-builtin", "value-external"],
+      "type-internal",
+      "value-internal",
+      ["type-parent", "type-sibling", "type-index"],
+      ["value-parent", "value-sibling", "value-index"],
+      "unknown"
+    ]
+  }
 }

@@ -1,4 +1,5 @@
 import type { ComponentPropsWithoutRef, FC } from "react";
+import clsx from "clsx";
 
 type HeadingTag = "h1" | "h2" | "h3" | "h4" | "h5" | "h6";
 
@@ -14,10 +15,7 @@ const sizeByTag: Partial<Record<HeadingTag, string>> = {
 
 const heading: FC<HeadingProps> = ({ as, className, ...props }) => {
   const Tag = as ?? "h1";
-  const headingSize = sizeByTag[Tag];
-  const classes = ["font-display", "font-bold", headingSize, className].filter(Boolean).join(" ");
-
-  return <Tag className={classes} {...props} />;
+  return <Tag {...props} className={clsx("font-display", "font-bold", sizeByTag[Tag], className)} />;
 };
 
 export default heading;

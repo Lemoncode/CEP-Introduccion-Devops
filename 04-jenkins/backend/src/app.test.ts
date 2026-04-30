@@ -1,5 +1,5 @@
-import express from "express";
 import { describe, expect, it } from "vitest";
+import express from "express";
 import { createApp } from "./app";
 
 describe("createApp", () => {

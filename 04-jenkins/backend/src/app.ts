@@ -1,9 +1,9 @@
 import cors from "cors";
-import express from "express";
-import recipeRoutes from "./recipes/recipes.routes";
+import express, { type Application } from "express";
 import healthRoutes from "./health/health.routes";
+import recipeRoutes from "./recipes/recipes.routes";
 
-export const createApp = () => {
+export const createApp = (): Application => {
   const app = express();
   app.use(cors());
   app.use(express.json());

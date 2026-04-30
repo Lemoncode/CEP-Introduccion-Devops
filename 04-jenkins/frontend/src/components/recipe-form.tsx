@@ -1,11 +1,4 @@
-import {
-  type SubmitEventHandler,
-  useState,
-  type ChangeEventHandler,
-  type FC,
-  type KeyboardEventHandler,
-  type MouseEventHandler,
-} from "react";
+import { type SubmitEventHandler, useState, type ChangeEventHandler, type FC, type KeyboardEventHandler, type MouseEventHandler } from "react";
 import type { RecipeDifficulty } from "@/types/recipe";
 import Heading from "./heading";
 
@@ -46,9 +39,7 @@ const RecipeForm: FC<RecipeFormProps> = ({ onSubmit, isLoading = false, initialD
   const [ingredientInput, setIngredientInput] = useState("");
   const [stepInput, setStepInput] = useState("");
 
-  const handleChange: ChangeEventHandler<
-    HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
-  > = (e) => {
+  const handleChange: ChangeEventHandler<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement> = (e) => {
     const { name, value } = e.target;
     if (name === "prepTime" || name === "servings") {
       const parsedValue = Number.parseInt(value, 10);
@@ -134,7 +125,7 @@ const RecipeForm: FC<RecipeFormProps> = ({ onSubmit, isLoading = false, initialD
   };
 
   return (
-    <form onSubmit={handleSubmit} className="card space-y-6 max-w-2xl">
+    <form onSubmit={handleSubmit} className="card max-w-2xl space-y-6">
       <div className="space-y-2">
         <label className="font-body font-semibold text-charcoal">Title</label>
         <input
@@ -154,7 +145,7 @@ const RecipeForm: FC<RecipeFormProps> = ({ onSubmit, isLoading = false, initialD
           name="description"
           value={formData.description}
           onChange={handleChange}
-          className="input-base w-full field-sizing-content max-h-30"
+          className="input-base field-sizing-content max-h-30 w-full"
           rows={3}
           placeholder="Describe your recipe"
         />
@@ -163,12 +154,7 @@ const RecipeForm: FC<RecipeFormProps> = ({ onSubmit, isLoading = false, initialD
       <div className="grid gap-4 md:grid-cols-3">
         <div className="space-y-2">
           <label className="font-body font-semibold text-charcoal">Difficulty</label>
-          <select
-            name="difficulty"
-            value={formData.difficulty}
-            onChange={handleChange}
-            className="input-base w-full"
-          >
+          <select name="difficulty" value={formData.difficulty} onChange={handleChange} className="input-base w-full">
             <option value="easy">Easy</option>
             <option value="medium">Medium</option>
             <option value="hard">Hard</option>
@@ -177,26 +163,12 @@ const RecipeForm: FC<RecipeFormProps> = ({ onSubmit, isLoading = false, initialD
 
         <div className="space-y-2">
           <label className="font-body font-semibold text-charcoal">Prep Time (min)</label>
-          <input
-            type="number"
-            name="prepTime"
-            value={formData.prepTime}
-            onChange={handleChange}
-            className="input-base w-full"
-            min="1"
-          />
+          <input type="number" name="prepTime" value={formData.prepTime} onChange={handleChange} className="input-base w-full" min="1" />
         </div>
 
         <div className="space-y-2">
           <label className="font-body font-semibold text-charcoal">Servings</label>
-          <input
-            type="number"
-            name="servings"
-            value={formData.servings}
-            onChange={handleChange}
-            className="input-base w-full"
-            min="1"
-          />
+          <input type="number" name="servings" value={formData.servings} onChange={handleChange} className="input-base w-full" min="1" />
         </div>
       </div>
 
@@ -207,13 +179,9 @@ const RecipeForm: FC<RecipeFormProps> = ({ onSubmit, isLoading = false, initialD
         </Heading>
         <div className="space-y-2">
           {formData.ingredients.map((ingredient: string, idx: number) => (
-            <div key={idx} className="flex items-center justify-between bg-mist p-3 rounded-lg">
+            <div key={idx} className="flex items-center justify-between rounded-lg bg-mist p-3">
               <span className="font-body text-charcoal">{ingredient}</span>
-              <button
-                type="button"
-                onClick={() => removeIngredient(idx)}
-                className="font-body text-sm text-red-600 hover:underline"
-              >
+              <button type="button" onClick={() => removeIngredient(idx)} className="font-body text-sm text-red-600 hover:underline">
                 Remove
               </button>
             </div>
@@ -241,26 +209,22 @@ const RecipeForm: FC<RecipeFormProps> = ({ onSubmit, isLoading = false, initialD
         </Heading>
         <div className="space-y-2">
           {formData.steps.map((step: string, idx: number) => (
-            <div key={idx} className="flex gap-3 bg-mist p-3 rounded-lg">
+            <div key={idx} className="flex gap-3 rounded-lg bg-mist p-3">
               <span className="font-body font-semibold text-charcoal/60">{idx + 1}.</span>
               <div className="flex-1">
                 <p className="font-body text-charcoal">{step}</p>
               </div>
-              <button
-                type="button"
-                onClick={() => removeStep(idx)}
-                className="font-body text-sm text-red-600 hover:underline"
-              >
+              <button type="button" onClick={() => removeStep(idx)} className="font-body text-sm text-red-600 hover:underline">
                 Remove
               </button>
             </div>
           ))}
         </div>
-        <div className="flex gap-2 items-start">
+        <div className="flex items-start gap-2">
           <textarea
             value={stepInput}
             onChange={handleStepInputChange}
-            className="input-base flex-1 field-sizing-content max-h-30"
+            className="input-base field-sizing-content max-h-30 flex-1"
             rows={2}
             placeholder="Add step"
           />
@@ -271,11 +235,7 @@ const RecipeForm: FC<RecipeFormProps> = ({ onSubmit, isLoading = false, initialD
       </div>
 
       <div className="flex gap-3 border-t border-mist pt-6">
-        <button
-          type="submit"
-          disabled={isLoading}
-          className="btn-primary flex-1 disabled:opacity-50"
-        >
+        <button type="submit" disabled={isLoading} className="btn-primary flex-1 disabled:opacity-50">
           {isLoading ? "Saving..." : "Save Recipe"}
         </button>
         <button type="button" className="btn-secondary flex-1" onClick={handleCancelClick}>

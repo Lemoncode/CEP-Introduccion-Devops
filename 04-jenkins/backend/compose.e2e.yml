@@ -25,7 +25,7 @@ services:
       FORCE_COLOR: 0
       NO_COLOR: true
       TEST_MODE: $TEST_MODE
-    command: npm run test:e2e
+    command: npm run test
     depends_on:
       mongo-e2e:
         condition: service_healthy

@@ -5,12 +5,14 @@ const isE2ETesting = process.env.TEST_MODE === "e2e";
 
 export default defineConfig({
   test: {
-    environment: "node",
-    include: isE2ETesting ? ["src/e2e/*.test.ts"] : ["src/**/*.test.ts"],
-    exclude: commonExclude.concat(isE2ETesting ? [] : ["src/e2e"]),
-    mockReset: true,
     coverage: {
       exclude: commonExclude,
+      provider: "v8",
     },
+    environment: "node",
+    exclude: [...commonExclude, ...(isE2ETesting ? [] : ["src/e2e"])],
+    include: isE2ETesting ? ["src/e2e/*.test.ts"] : ["src/**/*.test.ts"],
+    mockReset: true,
+    setupFiles: isE2ETesting ? ["src/e2e/setup-e2e.ts"] : [],
   },
 });

@@ -1,7 +1,7 @@
-import { Router } from "express";
+import { Router as createRouter } from "express";
 import { recipesController } from "./recipes.controller";
 
-const router = Router();
+const router = createRouter();
 
 router.get("/", recipesController.getRecipes);
 router.post("/", recipesController.createRecipe);

@@ -1,6 +1,6 @@
 import axios from "axios";
-import config from "../config";
-import type { CreateRecipeInput, Recipe } from "../types/recipe";
+import type { CreateRecipeInput, Recipe } from "@/types/recipe";
+import config from "@/config";
 
 const api = axios.create({
   baseURL: config.apiBaseUrl,

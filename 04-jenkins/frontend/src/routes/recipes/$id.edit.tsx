@@ -1,7 +1,7 @@
 import { useNavigate, useParams } from "@tanstack/react-router";
-import Heading from "../../components/heading";
-import { useRecipe, useUpdateRecipe } from "../../hooks/useRecipes";
-import RecipeForm, { type RecipeFormProps } from "../../components/recipe-form";
+import Heading from "@/components/heading";
+import RecipeForm, { type RecipeFormProps } from "@/components/recipe-form";
+import { useRecipe, useUpdateRecipe } from "@/hooks/useRecipes";
 
 export default function RecipeEditPage() {
   const { id } = useParams({ from: "/recipes/$id/edit" });
@@ -38,10 +38,7 @@ export default function RecipeEditPage() {
 
   return (
     <div className="space-y-6">
-      <button
-        onClick={() => navigate({ to: "/recipes/$id", params: { id } })}
-        className="font-body text-terracotta hover:underline"
-      >
+      <button onClick={() => navigate({ to: "/recipes/$id", params: { id } })} className="font-body text-terracotta hover:underline">
         ← Back to Recipe
       </button>
 
@@ -49,7 +46,7 @@ export default function RecipeEditPage() {
         <Heading as="h1" className="text-charcoal">
           Edit Recipe
         </Heading>
-        <p className="font-body text-charcoal/60 mt-2">Update the recipe details below.</p>
+        <p className="mt-2 font-body text-charcoal/60">Update the recipe details below.</p>
       </div>
 
       <RecipeForm onSubmit={handleSubmit} isLoading={isPending} initialData={recipe} />

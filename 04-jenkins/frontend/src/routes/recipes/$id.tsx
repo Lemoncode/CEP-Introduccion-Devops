@@ -1,6 +1,6 @@
 import { useNavigate, useParams } from "@tanstack/react-router";
-import Heading from "../../components/heading";
-import { useDeleteRecipe, useRecipe } from "../../hooks/useRecipes";
+import Heading from "@/components/heading";
+import { useDeleteRecipe, useRecipe } from "@/hooks/useRecipes";
 
 export default function RecipeDetailPage() {
   const { id } = useParams({ from: "/recipes/$id" });
@@ -38,10 +38,7 @@ export default function RecipeDetailPage() {
 
   return (
     <div className="space-y-8">
-      <button
-        onClick={() => navigate({ to: "/" })}
-        className="font-body text-terracotta hover:underline"
-      >
+      <button onClick={() => navigate({ to: "/" })} className="font-body text-terracotta hover:underline">
         ← Back to Recipes
       </button>
 
@@ -91,7 +88,7 @@ export default function RecipeDetailPage() {
             <Heading as="h3" className="text-charcoal">
               Ingredients
             </Heading>
-            <ul className="font-body list-inside list-disc space-y-1 text-charcoal/60">
+            <ul className="list-inside list-disc space-y-1 font-body text-charcoal/60">
               {recipe.ingredients.map((ingredient: string, idx: number) => (
                 <li key={idx}>{ingredient}</li>
               ))}
@@ -104,7 +101,7 @@ export default function RecipeDetailPage() {
             <Heading as="h3" className="text-charcoal">
               Steps
             </Heading>
-            <ol className="font-body list-inside list-decimal space-y-2 text-charcoal/60">
+            <ol className="list-inside list-decimal space-y-2 font-body text-charcoal/60">
               {recipe.steps.map((step: string, idx: number) => (
                 <li key={idx}>{step}</li>
               ))}
@@ -113,10 +110,7 @@ export default function RecipeDetailPage() {
         )}
 
         <div className="flex gap-3">
-          <button
-            onClick={() => navigate({ to: "/recipes/$id/edit", params: { id } })}
-            className="btn-primary flex-1"
-          >
+          <button onClick={() => navigate({ to: "/recipes/$id/edit", params: { id } })} className="btn-primary flex-1">
             Edit Recipe
           </button>
           <button onClick={handleDelete} className="btn-secondary flex-1" disabled={isDeleting}>

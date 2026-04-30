@@ -1,7 +1,7 @@
-import { renderWithRouter, rootRoute } from "@/test/router-utils";
+import { describe, expect, it } from "vitest";
 import { createRoute } from "@tanstack/react-router";
 import { screen } from "@testing-library/react";
-import { describe, expect, it } from "vitest";
+import { renderWithRouter, rootRoute } from "@/test/router-utils";
 import RecipeCard from "./recipe-card";
 
 describe("RecipeCard", () => {
@@ -24,9 +24,7 @@ describe("RecipeCard", () => {
 
     renderWithRouter({ routes: [route], initialLocation: "/" });
 
-    expect(
-      await screen.findByRole("heading", { level: 3, name: "Tortilla de patata" }),
-    ).toBeInTheDocument();
+    expect(await screen.findByRole("heading", { level: 3, name: "Tortilla de patata" })).toBeInTheDocument();
     expect(await screen.findByText("25 min")).toBeInTheDocument();
     expect(await screen.findByText("easy")).toBeInTheDocument();
     expect(await screen.findByText("Clasica y jugosa")).toBeInTheDocument();

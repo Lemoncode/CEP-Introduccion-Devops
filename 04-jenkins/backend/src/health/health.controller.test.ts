@@ -1,5 +1,5 @@
 import { describe, it, expect, beforeEach, vi, type Mock } from "vitest";
-import { type Request, type Response } from "express";
+import type { Request, Response } from "express";
 import { healthController } from "./health.controller";
 
 describe("healthController", () => {

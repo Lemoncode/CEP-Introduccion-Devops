@@ -1,10 +1,10 @@
 import { RouterProvider, createRootRoute, createRoute, createRouter } from "@tanstack/react-router";
+import NotFoundPage from "./routes/404";
 import Root from "./routes/__root";
 import IndexPage from "./routes/index";
 import RecipeDetailPage from "./routes/recipes/$id";
-import RecipeNewPage from "./routes/recipes/new";
 import RecipeEditPage from "./routes/recipes/$id.edit";
-import NotFoundPage from "./routes/404";
+import RecipeNewPage from "./routes/recipes/new";
 
 const rootRoute = createRootRoute({
   component: Root,
@@ -35,12 +35,7 @@ const recipeEditRoute = createRoute({
   component: RecipeEditPage,
 });
 
-const routeTree = rootRoute.addChildren([
-  indexRoute,
-  recipesNewRoute,
-  recipeDetailRoute,
-  recipeEditRoute,
-]);
+const routeTree = rootRoute.addChildren([indexRoute, recipesNewRoute, recipeDetailRoute, recipeEditRoute]);
 
 const router = createRouter({
   routeTree,

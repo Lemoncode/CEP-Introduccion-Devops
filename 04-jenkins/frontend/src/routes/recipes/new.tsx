@@ -1,7 +1,7 @@
 import { useNavigate } from "@tanstack/react-router";
-import Heading from "../../components/heading";
-import RecipeForm, { type RecipeFormProps } from "../../components/recipe-form";
-import { useCreateRecipe } from "../../hooks/useRecipes";
+import Heading from "@/components/heading";
+import RecipeForm, { type RecipeFormProps } from "@/components/recipe-form";
+import { useCreateRecipe } from "@/hooks/useRecipes";
 
 export default function RecipeNewPage() {
   const navigate = useNavigate();
@@ -17,10 +17,7 @@ export default function RecipeNewPage() {
 
   return (
     <div className="space-y-6">
-      <button
-        onClick={() => navigate({ to: "/" })}
-        className="font-body text-terracotta hover:underline"
-      >
+      <button onClick={() => navigate({ to: "/" })} className="font-body text-terracotta hover:underline">
         ← Back to Recipes
       </button>
 
@@ -28,9 +25,7 @@ export default function RecipeNewPage() {
         <Heading as="h1" className="text-charcoal">
           Create New Recipe
         </Heading>
-        <p className="font-body text-charcoal/60 mt-2">
-          Share your favorite recipe. Fill in the details below.
-        </p>
+        <p className="mt-2 font-body text-charcoal/60">Share your favorite recipe. Fill in the details below.</p>
       </div>
 
       <RecipeForm onSubmit={handleSubmit} isLoading={isPending} />

@@ -1,11 +1,4 @@
-import {
-  Outlet,
-  RootRoute,
-  RouterProvider,
-  createMemoryHistory,
-  createRootRoute,
-  createRouter,
-} from "@tanstack/react-router";
+import { Outlet, RootRoute, RouterProvider, createMemoryHistory, createRootRoute, createRouter } from "@tanstack/react-router";
 import { render, type RenderOptions } from "@testing-library/react";
 import React, { FC } from "react";
 
@@ -33,12 +26,7 @@ export const createTestRouter = (routes: Routes, initialLocation = "/") => {
   return router;
 };
 
-export const renderWithRouter = ({
-  router,
-  initialLocation = "/",
-  routes = [],
-  ...renderOptions
-}: RenderWithRouterOptions = {}) => {
+export const renderWithRouter = ({ router, initialLocation = "/", routes = [], ...renderOptions }: RenderWithRouterOptions = {}) => {
   if (!router && routes.length > 0) {
     router = createTestRouter(routes, initialLocation);
   }

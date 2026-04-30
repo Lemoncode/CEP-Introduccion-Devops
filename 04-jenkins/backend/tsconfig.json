@@ -1,20 +1,18 @@
 {
   "compilerOptions": {
-    "target": "esnext",
-    "module": "ESNext",
-    "moduleResolution": "node",
-    "outDir": "dist",
-    "strict": true,
+    "allowJs": false,
     "esModuleInterop": true,
+    "experimentalDecorators": true,
     "forceConsistentCasingInFileNames": true,
     "isolatedModules": true,
-    "useDefineForClassFields": true,
-    "skipLibCheck": true,
-    "rootDir": "src",
-    "allowJs": false,
+    "module": "esnext",
+    "moduleResolution": "bundler",
+    "outDir": "dist",
     "resolveJsonModule": true,
-    "experimentalDecorators": true
-  },
-  "include": ["src"],
-  "exclude": ["node_modules", "dist"]
+    "skipLibCheck": true,
+    "strict": true,
+    "target": "esnext",
+    "types": ["node"],
+    "useDefineForClassFields": true
+  }
 }

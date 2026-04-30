@@ -1,5 +1,5 @@
 # Stage 1: Build
-FROM node:lts AS builder
+FROM node:lts-alpine AS builder
 WORKDIR /app
 
 COPY package.json package-lock.json ./
@@ -10,7 +10,7 @@ RUN npm run prisma:generate
 RUN npm run build
 
 # Stage 2: Production
-FROM node:lts
+FROM node:lts-alpine
 
 ENV NODE_ENV="production"
 WORKDIR /app

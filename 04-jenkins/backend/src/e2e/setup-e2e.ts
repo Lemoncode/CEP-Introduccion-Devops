@@ -1,7 +1,7 @@
 import "dotenv/config";
-import { Server } from "http";
-import supertest, { type Agent } from "supertest";
 import { afterAll, beforeAll, beforeEach } from "vitest";
+import type { Server } from "node:http";
+import supertest, { type Agent } from "supertest";
 import { createApp } from "../app";
 import { clearDatabase } from "./db-helpers";
 

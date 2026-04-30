@@ -1,9 +1,9 @@
 import { Link, Outlet } from "@tanstack/react-router";
-import Heading from "../components/heading";
+import Heading from "@/components/heading";
 
 export default function RootLayout() {
   return (
-    <div className="min-h-screen bg-cream flex flex-col">
+    <div className="flex min-h-screen flex-col bg-cream">
       {/* Header */}
       <header className="border-b border-mist bg-charcoal shadow-sm">
         <div className="mx-auto max-w-6xl px-4 py-4 sm:px-6 lg:px-8">
@@ -33,7 +33,7 @@ export default function RootLayout() {
       </header>
 
       {/* Main Content */}
-      <main className="mx-auto max-w-6xl px-4 py-12 sm:px-6 lg:px-8 flex-1 overflow-auto">
+      <main className="mx-auto max-w-6xl flex-1 overflow-auto px-4 py-12 sm:px-6 lg:px-8">
         <Outlet />
       </main>
 
