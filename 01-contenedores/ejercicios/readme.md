@@ -185,12 +185,15 @@ Pregunta:
 
 Ejecuta un contenedor de:
 
-    postgres
+    postgres:17
 
 Usa un volumen Docker montado en:
 
     /var/lib/postgresql/data
 
+Si ejecutas una opción de postgres a partir de la 18, usa un volumen Docker montado en:
+
+    /var/lib/postgresql
 ---
 
 ## Crear tabla
